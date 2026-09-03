@@ -486,30 +486,6 @@ th{
   margin-top:15px;
 }
 
-.checklist{
-  background:#f8fafc;
-  border:1px solid var(--borda);
-  padding:10px;
-  border-radius:8px;
-}
-
-.check-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 0;
-  border-bottom:1px solid var(--borda);
-  font-size:12px;
-}
-
-.check-item:last-child{
-  border-bottom:0;
-}
-
-.check-item input{
-  width:auto;
-}
-
 .photos{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -672,11 +648,6 @@ th{
   color:var(--muted);
 }
 
-.section-title{
-  margin:25px 0 12px;
-  font-size:18px;
-}
-
 .switch{
   display:flex;
   align-items:center;
@@ -691,7 +662,6 @@ th{
   .cards{
     grid-template-columns:repeat(3,1fr);
   }
-
   .report-grid{
     grid-template-columns:repeat(2,1fr);
   }
@@ -702,11 +672,9 @@ th{
   .catalog-grid{
     grid-template-columns:1fr;
   }
-
   .filters{
     grid-template-columns:1fr 1fr;
   }
-
   .area-grid{
     grid-template-columns:1fr 1fr;
   }
@@ -716,26 +684,21 @@ th{
   .sidebar{
     width:70px;
   }
-
   .logo{
     font-size:0;
     text-align:center;
   }
-
   .logo:before{
     content:"PMP";
     font-size:18px;
   }
-
   .logo small,
   .menu button span:not(.menu-icon){
     display:none;
   }
-
   .menu button{
     text-align:center;
   }
-
   .main{
     margin-left:70px;
     padding:15px;
@@ -746,28 +709,22 @@ th{
   .cards{
     grid-template-columns:1fr 1fr;
   }
-
   .area-grid,
   .report-grid{
     grid-template-columns:1fr;
   }
-
   .form-grid{
     grid-template-columns:1fr;
   }
-
   .photos{
     grid-template-columns:repeat(2,1fr);
   }
-
   .calendar{
     gap:2px;
   }
-
   .day{
     min-height:75px;
   }
-
   .topbar{
     align-items:flex-start;
   }
@@ -778,890 +735,406 @@ th{
 <body>
 
 <aside class="sidebar">
-
 <div class="logo">
 PMP EDAG
 <small>Plano de Manutenção Predial</small>
 </div>
-
 <nav class="menu">
-
 <button class="active" data-page="dashboard">
 <span class="menu-icon">▣</span>
 <span>Dashboard</span>
 </button>
-
 <button data-page="ordens">
 <span class="menu-icon">✓</span>
 <span>Ordens de Serviço</span>
 </button>
-
 <button data-page="programacao">
 <span class="menu-icon">⟳</span>
 <span>Programação</span>
 </button>
-
+<button data-page="atividades">
+<span class="menu-icon">📋</span>
+<span>Cad. Atividades</span>
+</button>
 <button data-page="itens">
 <span class="menu-icon">⚙</span>
 <span>Itens de Manutenção</span>
 </button>
-
 <button data-page="equipamentos">
 <span class="menu-icon">▣</span>
 <span>Equipamentos</span>
 </button>
-
 <button data-page="areas">
 <span class="menu-icon">⌂</span>
 <span>Áreas e Itens</span>
 </button>
-
 <button data-page="cadastros">
 <span class="menu-icon">＋</span>
 <span>Cadastros</span>
 </button>
-
 <button data-page="calendario">
 <span class="menu-icon">□</span>
 <span>Calendário</span>
 </button>
-
 <button data-page="relatorios">
 <span class="menu-icon">▥</span>
 <span>Relatórios</span>
 </button>
-
 <button data-page="historico">
 <span class="menu-icon">≡</span>
 <span>Histórico</span>
 </button>
-
 <button data-page="config">
 <span class="menu-icon">⚙</span>
 <span>Configurações</span>
 </button>
-
 </nav>
 </aside>
 
-
 <main class="main">
 
-
-<!-- =====================================================
-DASHBOARD
-===================================================== -->
-
+<!-- DASHBOARD -->
 <section id="dashboard" class="page active">
-
 <div class="topbar">
-
 <div>
 <h1>Dashboard PMP EDAG</h1>
 <div class="subtitle" id="dataAtual"></div>
 </div>
-
-<button class="btn btn-primary"
-onclick="novaOrdem()">
-＋ Nova Ordem de Serviço
-</button>
-
+<button class="btn btn-primary" onclick="novaOrdem()">＋ Nova Ordem de Serviço</button>
 </div>
-
 
 <div class="cards">
-
-<div class="card">
-<div class="kpi-label">Total de OS</div>
-<div class="kpi" id="kpiTotal">0</div>
+<div class="card"><div class="kpi-label">Total de OS</div><div class="kpi" id="kpiTotal">0</div></div>
+<div class="card"><div class="kpi-label">Abertas</div><div class="kpi" id="kpiAbertas">0</div></div>
+<div class="card"><div class="kpi-label">Em andamento</div><div class="kpi" id="kpiAndamento">0</div></div>
+<div class="card"><div class="kpi-label">Concluídas</div><div class="kpi" id="kpiConcluidas">0</div></div>
+<div class="card"><div class="kpi-label">Atrasadas</div><div class="kpi" id="kpiAtrasadas">0</div></div>
+<div class="card"><div class="kpi-label">Programadas</div><div class="kpi" id="kpiProgramadas">0</div></div>
 </div>
-
-<div class="card">
-<div class="kpi-label">Abertas</div>
-<div class="kpi" id="kpiAbertas">0</div>
-</div>
-
-<div class="card">
-<div class="kpi-label">Em andamento</div>
-<div class="kpi" id="kpiAndamento">0</div>
-</div>
-
-<div class="card">
-<div class="kpi-label">Concluídas</div>
-<div class="kpi" id="kpiConcluidas">0</div>
-</div>
-
-<div class="card">
-<div class="kpi-label">Atrasadas</div>
-<div class="kpi" id="kpiAtrasadas">0</div>
-</div>
-
-<div class="card">
-<div class="kpi-label">Programadas</div>
-<div class="kpi" id="kpiProgramadas">0</div>
-</div>
-
-</div>
-
 
 <div class="dashboard-grid">
-
 <div class="card">
-
-<div class="card-title">
-Pendências prioritárias
-</div>
-
+<div class="card-title">Pendências prioritárias</div>
 <div id="pendencias"></div>
-
 </div>
-
-
 <div class="card">
-
-<div class="card-title">
-Desempenho do PMP
-</div>
-
-<div class="subtitle">
-Percentual de OS concluídas
-</div>
-
-<div style="margin:12px 0"
-class="progress-bg">
-
-<div class="progress"
-id="barraProgresso">
-</div>
-
-</div>
-
+<div class="card-title">Desempenho do PMP</div>
+<div class="subtitle">Percentual de OS concluídas</div>
+<div style="margin:12px 0" class="progress-bg"><div class="progress" id="barraProgresso"></div></div>
 <div id="percentual"></div>
-
 <hr style="border:0;border-top:1px solid #e2e8ee;margin:20px 0">
-
-<div class="card-title">
-Ações rápidas
+<div class="card-title">Ações rápidas</div>
+<button class="btn btn-light" onclick="mostrarPagina('programacao')">Programação</button>
+<button class="btn btn-light" onclick="mostrarPagina('atividades')">Cadastrar Atividades</button>
+<button class="btn btn-light" onclick="mostrarPagina('relatorios')">Relatórios</button>
 </div>
-
-<button class="btn btn-light"
-onclick="mostrarPagina('programacao')">
-Programação
-</button>
-
-<button class="btn btn-light"
-onclick="mostrarPagina('itens')">
-Itens de manutenção
-</button>
-
-<button class="btn btn-light"
-onclick="mostrarPagina('relatorios')">
-Relatórios
-</button>
-
 </div>
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-ORDENS
-===================================================== -->
-
+<!-- ORDENS -->
 <section id="ordens" class="page">
-
 <div class="topbar">
-
 <div>
 <h1>Ordens de Serviço</h1>
-<div class="subtitle">
-Execução e acompanhamento das tarefas.
+<div class="subtitle">Execução e acompanhamento das tarefas.</div>
 </div>
+<button class="btn btn-primary" onclick="novaOrdem()">＋ Nova OS</button>
 </div>
-
-<button class="btn btn-primary"
-onclick="novaOrdem()">
-＋ Nova OS
-</button>
-
-</div>
-
-
 <div class="card">
-
 <div class="filters">
-
-<input
-id="busca"
-placeholder="🔎 Buscar..."
-oninput="renderOrdens()">
-
-<select id="filtroArea"
-onchange="renderOrdens()">
-<option value="">Todas as áreas</option>
-</select>
-
-<select id="filtroLocal"
-onchange="renderOrdens()">
-<option value="">Todos os locais</option>
-</select>
-
-<select id="filtroStatus"
-onchange="renderOrdens()">
-
+<input id="busca" placeholder="🔎 Buscar..." oninput="renderOrdens()">
+<select id="filtroArea" onchange="renderOrdens()"><option value="">Todas as áreas</option></select>
+<select id="filtroLocal" onchange="renderOrdens()"><option value="">Todos os locais</option></select>
+<select id="filtroStatus" onchange="renderOrdens()">
 <option value="">Todos os status</option>
 <option>Aberta</option>
 <option>Em andamento</option>
 <option>Concluída</option>
-
 </select>
-
-<select id="filtroTipo"
-onchange="renderOrdens()">
-<option value="">Todos os tipos</option>
-</select>
-
+<select id="filtroTipo" onchange="renderOrdens()"><option value="">Todos os tipos</option></select>
 </div>
-
-<div id="tabelaOrdens"
-class="table-wrap"></div>
-
+<div id="tabelaOrdens" class="table-wrap"></div>
 </div>
-
 </section>
 
-
-<!-- =====================================================
-PROGRAMAÇÃO
-===================================================== -->
-
+<!-- PROGRAMAÇÃO -->
 <section id="programacao" class="page">
-
 <div class="topbar">
-
 <div>
 <h1>Programação Preventiva</h1>
-
-<div class="subtitle">
-Programação automática das manutenções.
+<div class="subtitle">Programação automática das manutenções.</div>
 </div>
-
+<button class="btn btn-primary" onclick="novaProgramacao()">＋ Nova programação</button>
 </div>
-
-<button class="btn btn-primary"
-onclick="novaProgramacao()">
-＋ Nova programação
-</button>
-
-</div>
-
-
 <div class="card">
-
-<div class="notice">
-Cadastre a frequência de cada item de manutenção. O sistema calcula a próxima execução e indica tarefas vencidas ou próximas do vencimento.
+<div class="notice">Cadastre a frequência de cada item de manutenção. O sistema calcula a próxima execução e indica tarefas vencidas ou próximas do vencimento.</div>
+<div id="tabelaProgramacao" class="table-wrap"></div>
 </div>
-
-<div id="tabelaProgramacao"
-class="table-wrap">
-</div>
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-ITENS DE MANUTENÇÃO
-===================================================== -->
-
-<section id="itens" class="page">
-
+<!-- CADASTRO DE ATIVIDADES -->
+<section id="atividades" class="page">
 <div class="topbar">
-
 <div>
-
-<h1>Itens de Manutenção</h1>
-
-<div class="subtitle">
-Cadastro das atividades que devem ser executadas nos equipamentos.
+<h1>Catálogo de Atividades</h1>
+<div class="subtitle">Padronização de tarefas e listas de verificação para manutenção.</div>
 </div>
-
+<button class="btn btn-primary" onclick="novaAtividadeCatalogo()">＋ Nova Atividade</button>
 </div>
-
-<button class="btn btn-primary"
-onclick="novoItemManutencao()">
-＋ Novo item de manutenção
-</button>
-
-</div>
-
-
 <div class="card">
-
 <div class="filters">
+<input id="buscaAtividade" placeholder="🔎 Buscar atividade..." oninput="renderAtividadesCatalogo()">
+<select id="filtroAtivTipo" onchange="renderAtividadesCatalogo()"><option value="">Todos os tipos</option></select>
+</div>
+<div id="tabelaAtividadesCatalogo" class="table-wrap"></div>
+</div>
+</section>
 
-<input
-id="buscaItem"
-placeholder="🔎 Buscar item..."
-oninput="renderItens()">
-
-<select
-id="filtroItemArea"
-onchange="renderItens()">
-<option value="">Todas as áreas</option>
-</select>
-
-<select
-id="filtroItemEquipamento"
-onchange="renderItens()">
-<option value="">Todos os equipamentos</option>
-</select>
-
-<select
-id="filtroItemStatus"
-onchange="renderItens()">
-
+<!-- ITENS DE MANUTENÇÃO -->
+<section id="itens" class="page">
+<div class="topbar">
+<div>
+<h1>Itens de Manutenção</h1>
+<div class="subtitle">Vínculo das atividades padronizadas aos equipamentos.</div>
+</div>
+<button class="btn btn-primary" onclick="novoItemManutencao()">＋ Novo item de manutenção</button>
+</div>
+<div class="card">
+<div class="filters">
+<input id="buscaItem" placeholder="🔎 Buscar item..." oninput="renderItens()">
+<select id="filtroItemArea" onchange="renderItens()"><option value="">Todas as áreas</option></select>
+<select id="filtroItemEquipamento" onchange="renderItens()"><option value="">Todos os equipamentos</option></select>
+<select id="filtroItemStatus" onchange="renderItens()">
 <option value="">Todos</option>
 <option value="Ativo">Ativos</option>
 <option value="Inativo">Inativos</option>
-
 </select>
-
 </div>
-
-<div id="tabelaItens"
-class="table-wrap">
+<div id="tabelaItens" class="table-wrap"></div>
 </div>
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-EQUIPAMENTOS
-===================================================== -->
-
+<!-- EQUIPAMENTOS -->
 <section id="equipamentos" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Equipamentos</h1>
-
-<div class="subtitle">
-Cadastro dos equipamentos e ativos prediais.
+<div class="subtitle">Cadastro dos equipamentos e ativos prediais.</div>
 </div>
-
+<button class="btn btn-primary" onclick="novoEquipamento()">＋ Novo equipamento</button>
 </div>
-
-<button class="btn btn-primary"
-onclick="novoEquipamento()">
-＋ Novo equipamento
-</button>
-
-</div>
-
-
 <div class="card">
-
-<div id="tabelaEquipamentos"
-class="table-wrap">
+<div id="tabelaEquipamentos" class="table-wrap"></div>
 </div>
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-ÁREAS
-===================================================== -->
-
+<!-- ÁREAS -->
 <section id="areas" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Áreas e Itens</h1>
-
-<div class="subtitle">
-Estrutura física do estabelecimento.
+<div class="subtitle">Estrutura física do estabelecimento.</div>
 </div>
-
+<button class="btn btn-primary" onclick="novaArea()">＋ Nova área</button>
 </div>
-
-<button class="btn btn-primary"
-onclick="novaArea()">
-＋ Nova área
-</button>
-
-</div>
-
-
-<div id="areaGrid"
-class="area-grid">
-</div>
-
+<div id="areaGrid" class="area-grid"></div>
 </section>
 
-
-<!-- =====================================================
-CADASTROS
-===================================================== -->
-
+<!-- CADASTROS -->
 <section id="cadastros" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Cadastros auxiliares</h1>
-
-<div class="subtitle">
-Locais, tipos de manutenção e responsáveis.
+<div class="subtitle">Locais, tipos de manutenção e responsáveis.</div>
 </div>
-
 </div>
-
-</div>
-
-
 <div class="catalog-grid">
-
-
 <div class="catalog-card">
-
-<div class="card-title">
-📍 Locais
-</div>
-
+<div class="card-title">📍 Locais</div>
 <div class="form-grid">
-
-<input
-id="novoLocal"
-placeholder="Novo local">
-
-<button
-class="btn btn-primary"
-onclick="adicionarLocal()">
-Adicionar
-</button>
-
+<input id="novoLocal" placeholder="Novo local">
+<button class="btn btn-primary" onclick="adicionarLocal()">Adicionar</button>
 </div>
-
-<div id="listaLocais"
-class="catalog-list">
+<div id="listaLocais" class="catalog-list"></div>
 </div>
-
-</div>
-
-
 <div class="catalog-card">
-
-<div class="card-title">
-🛠️ Tipos de manutenção
-</div>
-
+<div class="card-title">🛠️ Tipos de manutenção</div>
 <div class="form-grid">
-
-<input
-id="novoTipo"
-placeholder="Novo tipo">
-
-<button
-class="btn btn-primary"
-onclick="adicionarTipo()">
-Adicionar
-</button>
-
+<input id="novoTipo" placeholder="Novo tipo">
+<button class="btn btn-primary" onclick="adicionarTipo()">Adicionar</button>
 </div>
-
-<div id="listaTipos"
-class="catalog-list">
+<div id="listaTipos" class="catalog-list"></div>
 </div>
-
-</div>
-
-
 <div class="catalog-card">
-
-<div class="card-title">
-👤 Responsáveis
-</div>
-
+<div class="card-title">👤 Responsáveis</div>
 <div class="form-grid">
-
-<input
-id="novoResponsavel"
-placeholder="Nome do responsável">
-
-<button
-class="btn btn-primary"
-onclick="adicionarResponsavel()">
-Adicionar
-</button>
-
+<input id="novoResponsavel" placeholder="Nome do responsável">
+<button class="btn btn-primary" onclick="adicionarResponsavel()">Adicionar</button>
 </div>
-
-<div id="listaResponsaveis"
-class="catalog-list">
+<div id="listaResponsaveis" class="catalog-list"></div>
 </div>
-
-</div>
-
-
 <div class="catalog-card">
-
-<div class="card-title">
-🏢 Fornecedores
-</div>
-
+<div class="card-title">🏢 Fornecedores</div>
 <div class="form-grid">
-
-<input
-id="novoFornecedor"
-placeholder="Nome do fornecedor">
-
-<button
-class="btn btn-primary"
-onclick="adicionarFornecedor()">
-Adicionar
-</button>
-
+<input id="novoFornecedor" placeholder="Nome do fornecedor">
+<button class="btn btn-primary" onclick="adicionarFornecedor()">Adicionar</button>
 </div>
-
-<div id="listaFornecedores"
-class="catalog-list">
+<div id="listaFornecedores" class="catalog-list"></div>
 </div>
-
 </div>
-
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-CALENDÁRIO
-===================================================== -->
-
+<!-- CALENDÁRIO -->
 <section id="calendario" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Calendário</h1>
-
-<div class="subtitle">
-Planejamento das atividades.
+<div class="subtitle">Planejamento das atividades.</div>
 </div>
-
-</div>
-
 <div>
-
-<button
-class="btn btn-light"
-onclick="mudarMes(-1)">
-‹
-</button>
-
-<button
-class="btn btn-light"
-onclick="mudarMes(1)">
-›
-</button>
-
+<button class="btn btn-light" onclick="mudarMes(-1)">‹</button>
+<button class="btn btn-light" onclick="mudarMes(1)">›</button>
 </div>
-
 </div>
-
-
 <div class="card">
-
-<div
-id="tituloMes"
-style="text-align:center;font-weight:bold;margin-bottom:15px">
+<div id="tituloMes" style="text-align:center;font-weight:bold;margin-bottom:15px"></div>
+<div id="calendarioGrid" class="calendar"></div>
 </div>
-
-<div
-id="calendarioGrid"
-class="calendar">
-</div>
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-RELATÓRIOS
-===================================================== -->
-
+<!-- RELATÓRIOS -->
 <section id="relatorios" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Relatórios</h1>
-
-<div class="subtitle">
-Relatório de status e desempenho do PMP.
+<div class="subtitle">Relatório de status e desempenho do PMP.</div>
 </div>
-
+<button class="btn btn-light" onclick="window.print()">🖨 Imprimir</button>
 </div>
-
-<button
-class="btn btn-light"
-onclick="window.print()">
-🖨 Imprimir
-</button>
-
-</div>
-
-
-<div class="card"
-style="margin-bottom:18px">
-
+<div class="card" style="margin-bottom:18px">
 <div class="filters">
-
-<input
-type="date"
-id="relInicio"
-onchange="renderRelatorios()">
-
-<input
-type="date"
-id="relFim"
-onchange="renderRelatorios">
-
-<select
-id="relArea"
-onchange="renderRelatorios()">
-<option value="">Todas as áreas</option>
-</select>
-
-<select
-id="relTipo"
-onchange="renderRelatorios()">
-<option value="">Todos os tipos</option>
-</select>
-
+<input type="date" id="relInicio" onchange="renderRelatorios()">
+<input type="date" id="relFim" onchange="renderRelatorios()">
+<select id="relArea" onchange="renderRelatorios()"><option value="">Todas as áreas</option></select>
+<select id="relTipo" onchange="renderRelatorios()"><option value="">Todos os tipos</option></select>
 </div>
-
 </div>
-
-
-<div id="relatorioConteudo">
-</div>
-
+<div id="relatorioConteudo"></div>
 </section>
 
-
-<!-- =====================================================
-HISTÓRICO
-===================================================== -->
-
+<!-- HISTÓRICO -->
 <section id="historico" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Histórico</h1>
-
-<div class="subtitle">
-Registro das atividades executadas.
+<div class="subtitle">Registro das atividades executadas.</div>
 </div>
-
 </div>
-
-</div>
-
-
 <div class="card">
-
-<div id="historicoLista">
+<div id="historicoLista"></div>
 </div>
-
-</div>
-
 </section>
 
-
-<!-- =====================================================
-CONFIGURAÇÕES
-===================================================== -->
-
+<!-- CONFIGURAÇÕES -->
 <section id="config" class="page">
-
 <div class="topbar">
-
 <div>
-
 <h1>Configurações</h1>
-
-<div class="subtitle">
-Configurações gerais.
+<div class="subtitle">Configurações gerais.</div>
 </div>
-
 </div>
-
-</div>
-
-
 <div class="card">
-
 <div class="field">
-
 <label>Responsável pela gestão</label>
-
-<input
-id="responsavelGestao"
-onchange="salvarConfiguracao()">
-
+<input id="responsavelGestao" onchange="salvarConfiguracao()">
 </div>
-
-
 <div class="field">
-
 <label>Meta de conclusão (%)</label>
-
-<input
-id="meta"
-type="number"
-min="0"
-max="100"
-onchange="salvarConfiguracao()">
-
+<input id="meta" type="number" min="0" max="100" onchange="salvarConfiguracao()">
 </div>
-
-
-<div class="notice">
-Esta versão utiliza o armazenamento local do navegador. Os dados permanecem neste computador ou celular.
+<div class="notice">Esta versão utiliza o armazenamento local do navegador. Os dados permanecem neste computador ou celular.</div>
+<button class="btn btn-danger" onclick="restaurarDados()">Restaurar dados de demonstração</button>
 </div>
-
-
-<button
-class="btn btn-danger"
-onclick="restaurarDados()">
-Restaurar dados de demonstração
-</button>
-
-</div>
-
 </section>
 
 </main>
 
-
-<!-- =====================================================
-MODAL ITEM DE MANUTENÇÃO
-===================================================== -->
-
-<div id="modalItem"
-class="modal">
-
+<!-- MODAL CATÁLOGO DE ATIVIDADE -->
+<div id="modalAtividadeCatalogo" class="modal">
 <div class="modal-box">
-
 <div class="modal-head">
-
-<h2 id="tituloModalItem">
-Novo Item de Manutenção
-</h2>
-
-<button
-class="close"
-onclick="fecharModalItem()">
-×
-</button>
-
+<h2 id="tituloModalAtividadeCatalogo">Nova Atividade Padronizada</h2>
+<button class="close" onclick="fecharModalAtividadeCatalogo()">×</button>
+</div>
+<input type="hidden" id="ativCatId">
+<div class="field">
+<label>Nome da Atividade *</label>
+<input id="ativCatNome" placeholder="Ex: Substituição de elemento filtrante e óleo">
+</div>
+<div class="form-grid">
+<div class="field">
+<label>Tipo de Manutenção</label>
+<select id="ativCatTipo"></select>
+</div>
+<div class="field">
+<label>Tempo Estimado (Horas)</label>
+<input type="number" id="ativCatTempo" step="0.5" value="1.0">
+</div>
+</div>
+<div class="field">
+<label>Procedimento Padrão</label>
+<textarea id="ativCatProcedimento" rows="3" placeholder="Passo a passo detalhado..."></textarea>
+</div>
+<div class="field">
+<label>Checklist Padrão (separado por ponto e vírgula ';')</label>
+<textarea id="ativCatChecklist" rows="3" placeholder="Item 1; Item 2; Item 3"></textarea>
+</div>
+<div class="form-buttons">
+<button class="btn btn-danger" id="btnExcluirAtivCat" style="display:none" onclick="excluirAtividadeCatalogo()">Excluir</button>
+<button class="btn btn-light" onclick="fecharModalAtividadeCatalogo()">Cancelar</button>
+<button class="btn btn-primary" onclick="salvarAtividadeCatalogo()">Salvar Atividade</button>
+</div>
+</div>
 </div>
 
-
-<input
-type="hidden"
-id="itemId">
-
-
-<div class="form-grid">
-
+<!-- MODAL ITEM DE MANUTENÇÃO -->
+<div id="modalItem" class="modal">
+<div class="modal-box">
+<div class="modal-head">
+<h2 id="tituloModalItem">Novo Item de Manutenção</h2>
+<button class="close" onclick="fecharModalItem()">×</button>
+</div>
+<input type="hidden" id="itemId">
 <div class="field">
-
+<label>Vincular Atividade do Catálogo (Opcional)</label>
+<select id="itemAtividadeCatalogo" onchange="preencherItemComCatalogo()"><option value="">-- Selecione uma atividade padronizada --</option></select>
+</div>
+<div class="form-grid">
+<div class="field">
 <label>Área *</label>
-
-<select
-id="itemArea"
-onchange="atualizarLocaisItem()">
-</select>
-
+<select id="itemArea" onchange="atualizarLocaisItem()"></select>
 </div>
-
-
 <div class="field">
-
 <label>Local *</label>
-
-<select
-id="itemLocal">
-</select>
-
+<select id="itemLocal"></select>
 </div>
-
 </div>
-
-
 <div class="field">
-
 <label>Equipamento *</label>
-
-<select
-id="itemEquipamento">
-</select>
-
+<select id="itemEquipamento"></select>
 </div>
-
-
 <div class="field">
-
-<label>Item de manutenção *</label>
-
-<input
-id="itemNome"
-placeholder="Ex.: Verificar nível do óleo">
-
+<label>Item / Título da Rotina *</label>
+<input id="itemNome" placeholder="Ex.: Verificar nível do óleo">
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Tipo de manutenção</label>
-
-<select
-id="itemTipo">
-</select>
-
+<select id="itemTipo"></select>
 </div>
-
-
 <div class="field">
-
 <label>Periodicidade</label>
-
-<select
-id="itemPeriodicidade">
-
+<select id="itemPeriodicidade">
 <option value="Diária">Diária</option>
 <option value="Semanal">Semanal</option>
 <option value="Quinzenal">Quinzenal</option>
@@ -1670,314 +1143,121 @@ id="itemPeriodicidade">
 <option value="Trimestral">Trimestral</option>
 <option value="Semestral">Semestral</option>
 <option value="Anual">Anual</option>
-
 </select>
-
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Prioridade</label>
-
 <select id="itemPrioridade">
-
 <option>Alta</option>
 <option selected>Média</option>
 <option>Baixa</option>
-
 </select>
-
 </div>
-
-
 <div class="field">
-
 <label>Status</label>
-
 <select id="itemStatus">
-
 <option selected>Ativo</option>
 <option>Inativo</option>
-
 </select>
-
 </div>
-
 </div>
-
-
 <div class="field">
-
 <label>Procedimento / descrição</label>
-
-<textarea
-id="itemProcedimento"
-rows="4"
-placeholder="Descreva como a manutenção deve ser executada.">
-</textarea>
-
+<textarea id="itemProcedimento" rows="3" placeholder="Descreva como a manutenção deve ser executada."></textarea>
 </div>
-
-
 <div class="field">
-
-<label>Checklist padrão</label>
-
-<textarea
-id="itemChecklist"
-rows="4"
-placeholder="Digite os itens separados por ponto e vírgula.">
-</textarea>
-
+<label>Checklist padrão (separado por ponto e vírgula ';')</label>
+<textarea id="itemChecklist" rows="3" placeholder="Digite os itens separados por ponto e vírgula."></textarea>
 </div>
-
-
 <div class="form-buttons">
-
-<button
-class="btn btn-danger"
-id="btnExcluirItem"
-style="display:none"
-onclick="excluirItem()">
-Excluir
-</button>
-
-<button
-class="btn btn-light"
-onclick="fecharModalItem()">
-Cancelar
-</button>
-
-<button
-class="btn btn-primary"
-onclick="salvarItem()">
-Salvar item
-</button>
-
+<button class="btn btn-danger" id="btnExcluirItem" style="display:none" onclick="excluirItem()">Excluir</button>
+<button class="btn btn-light" onclick="fecharModalItem()">Cancelar</button>
+<button class="btn btn-primary" onclick="salvarItem()">Salvar item</button>
+</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-
-<!-- =====================================================
-MODAL EQUIPAMENTO
-===================================================== -->
-
-<div id="modalEquipamento"
-class="modal">
-
+<!-- MODAL EQUIPAMENTO -->
+<div id="modalEquipamento" class="modal">
 <div class="modal-box">
-
 <div class="modal-head">
-
-<h2 id="tituloModalEquipamento">
-Novo Equipamento
-</h2>
-
-<button
-class="close"
-onclick="fecharModalEquipamento()">
-×
-</button>
-
+<h2 id="tituloModalEquipamento">Novo Equipamento</h2>
+<button class="close" onclick="fecharModalEquipamento()">×</button>
 </div>
-
-
-<input
-type="hidden"
-id="equipamentoId">
-
-
+<input type="hidden" id="equipamentoId">
 <div class="form-grid">
-
 <div class="field">
-
 <label>Área *</label>
-
-<select id="equipArea">
-</select>
-
+<select id="equipArea"></select>
 </div>
-
-
 <div class="field">
-
 <label>Local *</label>
-
-<select id="equipLocal">
-</select>
-
+<select id="equipLocal"></select>
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Nome do equipamento *</label>
-
-<input
-id="equipNome"
-placeholder="Ex.: Gerador">
-
+<input id="equipNome" placeholder="Ex.: Gerador">
 </div>
-
-
 <div class="field">
-
 <label>Patrimônio / código</label>
-
-<input
-id="equipPatrimonio"
-placeholder="Código patrimonial">
-
+<input id="equipPatrimonio" placeholder="Código patrimonial">
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Fabricante</label>
-
 <input id="equipFabricante">
-
 </div>
-
-
 <div class="field">
-
 <label>Modelo</label>
-
 <input id="equipModelo">
-
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Número de série</label>
-
 <input id="equipSerie">
-
 </div>
-
-
 <div class="field">
-
 <label>Status</label>
-
 <select id="equipStatus">
-
 <option>Ativo</option>
 <option>Inativo</option>
 <option>Em manutenção</option>
-
 </select>
-
 </div>
-
 </div>
-
-
 <div class="field">
-
 <label>Observações</label>
-
-<textarea
-id="equipObservacoes"
-rows="4">
-</textarea>
-
+<textarea id="equipObservacoes" rows="3"></textarea>
 </div>
-
-
 <div class="form-buttons">
-
-<button
-class="btn btn-danger"
-id="btnExcluirEquipamento"
-style="display:none"
-onclick="excluirEquipamento()">
-Excluir
-</button>
-
-<button
-class="btn btn-light"
-onclick="fecharModalEquipamento()">
-Cancelar
-</button>
-
-<button
-class="btn btn-primary"
-onclick="salvarEquipamento()">
-Salvar
-</button>
-
+<button class="btn btn-danger" id="btnExcluirEquipamento" style="display:none" onclick="excluirEquipamento()">Excluir</button>
+<button class="btn btn-light" onclick="fecharModalEquipamento()">Cancelar</button>
+<button class="btn btn-primary" onclick="salvarEquipamento()">Salvar</button>
+</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-
-<!-- =====================================================
-MODAL PROGRAMAÇÃO
-===================================================== -->
-
-<div id="modalProgramacao"
-class="modal">
-
+<!-- MODAL PROGRAMAÇÃO -->
+<div id="modalProgramacao" class="modal">
 <div class="modal-box">
-
 <div class="modal-head">
-
 <h2>Nova Programação Preventiva</h2>
-
-<button
-class="close"
-onclick="fecharModalProgramacao()">
-×
-</button>
-
+<button class="close" onclick="fecharModalProgramacao()">×</button>
 </div>
-
-
 <div class="field">
-
 <label>Item de manutenção *</label>
-
-<select
-id="progItem"
-onchange="carregarDadosProgramacao()">
-</select>
-
+<select id="progItem" onchange="carregarDadosProgramacao()"></select>
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Periodicidade</label>
-
 <select id="progPeriodicidade">
-
 <option>Diária</option>
 <option>Semanal</option>
 <option>Quinzenal</option>
@@ -1986,1439 +1266,573 @@ onchange="carregarDadosProgramacao()">
 <option>Trimestral</option>
 <option>Semestral</option>
 <option>Anual</option>
-
 </select>
-
 </div>
-
-
 <div class="field">
-
 <label>Última execução</label>
-
-<input
-type="date"
-id="progUltima">
+<input type="date" id="progUltima">
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Próxima execução</label>
-
-<input
-type="date"
-id="progProxima">
+<input type="date" id="progProxima">
 </div>
-
-
 <div class="field">
-
 <label>Responsável</label>
-
-<select id="progResponsavel">
-</select>
-
+<select id="progResponsavel"></select>
 </div>
-
 </div>
-
-
 <div class="field">
-
 <label>Ativar geração automática de OS</label>
-
 <div class="switch">
-
-<input
-type="checkbox"
-id="progAuto"
-checked>
-
-<span>
-Gerar OS automaticamente quando chegar a data
-</span>
-
+<input type="checkbox" id="progAuto" checked>
+<span>Gerar OS automaticamente quando chegar a data</span>
 </div>
-
 </div>
-
-
 <div class="form-buttons">
-
-<button
-class="btn btn-light"
-onclick="fecharModalProgramacao()">
-Cancelar
-</button>
-
-<button
-class="btn btn-primary"
-onclick="salvarProgramacao()">
-Salvar programação
-</button>
-
+<button class="btn btn-light" onclick="fecharModalProgramacao()">Cancelar</button>
+<button class="btn btn-primary" onclick="salvarProgramacao()">Salvar programação</button>
+</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-
-<!-- =====================================================
-MODAL OS
-===================================================== -->
-
-<div id="modalOrdem"
-class="modal">
-
+<!-- MODAL OS -->
+<div id="modalOrdem" class="modal">
 <div class="modal-box">
-
 <div class="modal-head">
-
-<h2 id="modalTitulo">
-Nova Ordem de Serviço
-</h2>
-
-<button
-class="close"
-onclick="fecharModalOrdem()">
-×
-</button>
-
+<h2 id="modalTitulo">Nova Ordem de Serviço</h2>
+<button class="close" onclick="fecharModalOrdem()">×</button>
 </div>
-
-
-<input
-type="hidden"
-id="ordemId">
-
-
+<input type="hidden" id="ordemId">
 <div class="field">
-
 <label>Item de manutenção</label>
-
-<select
-id="ordemItem"
-onchange="preencherOSComItem()">
-
-<option value="">
--- OS avulsa --
-</option>
-
-</select>
-
+<select id="ordemItem" onchange="preencherOSComItem()"><option value="">-- OS avulsa --</option></select>
 </div>
-
-
 <div class="field">
-
 <label>Título da tarefa *</label>
-
-<input
-id="ordemTitulo"
-placeholder="Descrição da atividade">
-
+<input id="ordemTitulo" placeholder="Descrição da atividade">
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Área</label>
-
-<select id="ordemArea">
-</select>
-
+<select id="ordemArea"></select>
 </div>
-
-
 <div class="field">
-
 <label>Local</label>
-
-<select id="ordemLocal">
-</select>
-
+<select id="ordemLocal"></select>
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Equipamento</label>
-
-<select id="ordemEquipamento">
-</select>
-
+<select id="ordemEquipamento"></select>
 </div>
-
-
 <div class="field">
-
 <label>Tipo</label>
-
-<select id="ordemTipo">
-</select>
-
+<select id="ordemTipo"></select>
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Prioridade</label>
-
 <select id="ordemPrioridade">
-
 <option>Alta</option>
 <option selected>Média</option>
 <option>Baixa</option>
-
 </select>
-
 </div>
-
-
 <div class="field">
-
 <label>Status</label>
-
 <select id="ordemStatus">
-
 <option>Aberta</option>
 <option>Em andamento</option>
 <option>Concluída</option>
-
 </select>
-
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Data</label>
-
-<input
-type="date"
-id="ordemData">
-
+<input type="date" id="ordemData">
 </div>
-
-
 <div class="field">
-
 <label>Horário</label>
-
-<input
-type="time"
-id="ordemHorario">
-
+<input type="time" id="ordemHorario">
 </div>
-
 </div>
-
-
 <div class="form-grid">
-
 <div class="field">
-
 <label>Responsável</label>
-
-<select id="ordemResponsavel">
-</select>
-
+<select id="ordemResponsavel"></select>
 </div>
-
-
 <div class="field">
-
 <label>Fornecedor</label>
-
-<select id="ordemFornecedor">
-</select>
-
+<select id="ordemFornecedor"></select>
 </div>
-
 </div>
-
-
 <div class="field">
-
 <label>Checklist</label>
-
-<textarea
-id="ordemChecklist"
-rows="5"
-placeholder="Cada item separado por ponto e vírgula.">
-</textarea>
-
+<textarea id="ordemChecklist" rows="4" placeholder="Cada item separado por ponto e vírgula."></textarea>
 </div>
-
-
 <div class="field">
-
 <label>Procedimento</label>
-
-<textarea
-id="ordemProcedimento"
-rows="4">
-</textarea>
-
+<textarea id="ordemProcedimento" rows="3"></textarea>
 </div>
-
-
 <div class="field">
-
 <label>Observações / execução</label>
-
-<textarea
-id="ordemObservacoes"
-rows="4">
-</textarea>
-
+<textarea id="ordemObservacoes" rows="3"></textarea>
 </div>
-
-
 <div class="field">
-
 <label>Fotos da ordem de serviço</label>
-
 <label class="upload-box">
-
 📷 Clique para adicionar fotos
-
-<input
-type="file"
-id="ordemFotos"
-accept="image/*"
-multiple
-style="display:none"
-onchange="adicionarFotosOS(event)">
-
+<input type="file" id="ordemFotos" accept="image/*" multiple style="display:none" onchange="adicionarFotosOS(event)">
 </label>
-
-<div
-id="fotosPreview"
-class="photos">
+<div id="fotosPreview" class="photos"></div>
 </div>
-
-</div>
-
-
 <div class="form-buttons">
-
-<button
-class="btn btn-danger"
-id="btnExcluirOS"
-style="display:none"
-onclick="excluirOS()">
-Excluir
-</button>
-
-<button
-class="btn btn-light"
-onclick="fecharModalOrdem()">
-Cancelar
-</button>
-
-<button
-class="btn btn-primary"
-onclick="salvarOS()">
-Salvar OS
-</button>
-
+<button class="btn btn-danger" id="btnExcluirOS" style="display:none" onclick="excluirOS()">Excluir</button>
+<button class="btn btn-light" onclick="fecharModalOrdem()">Cancelar</button>
+<button class="btn btn-primary" onclick="salvarOS()">Salvar OS</button>
+</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-
-<!-- =====================================================
-MODAL ÁREA
-===================================================== -->
-
-<div id="modalArea"
-class="modal">
-
+<!-- MODAL ÁREA -->
+<div id="modalArea" class="modal">
 <div class="modal-box">
-
 <div class="modal-head">
-
 <h2>Nova Área</h2>
-
-<button
-class="close"
-onclick="fecharModalArea()">
-×
-</button>
-
+<button class="close" onclick="fecharModalArea()">×</button>
 </div>
-
-
 <div class="field">
-
 <label>Nome da área</label>
-
-<input
-id="nomeArea"
-placeholder="Ex.: Almoxarifado">
-
+<input id="nomeArea" placeholder="Ex.: Almoxarifado">
 </div>
-
-
 <div class="field">
-
 <label>Itens gerais da área</label>
-
-<textarea
-id="itensArea"
-rows="5"
-placeholder="Digite os itens separados por ;">
-</textarea>
-
+<textarea id="itensArea" rows="4" placeholder="Digite os itens separados por ;"></textarea>
 </div>
-
-
 <div class="form-buttons">
-
-<button
-class="btn btn-light"
-onclick="fecharModalArea()">
-Cancelar
-</button>
-
-<button
-class="btn btn-primary"
-onclick="salvarNovaArea()">
-Salvar
-</button>
-
+<button class="btn btn-light" onclick="fecharModalArea()">Cancelar</button>
+<button class="btn btn-primary" onclick="salvarNovaArea()">Salvar</button>
 </div>
-
 </div>
-
 </div>
-
 
 <script>
-
-/* =========================================================
-   DADOS INICIAIS
-========================================================= */
-
 let AREAS = [
-
-{
- nome:"Portaria",
- itens:[
-  "Elétrica",
-  "Hidráulica",
-  "Portões",
-  "Esgoto",
-  "Jardins",
-  "Passeio"
- ]
-},
-
-{
- nome:"Cabine Primária",
- itens:[
-  "Iluminação",
-  "Equipamentos",
-  "Estrutura",
-  "Cabos",
-  "Portas"
- ]
-},
-
-{
- nome:"Poço Artesiano",
- itens:[
-  "Cercado",
-  "Bomba",
-  "Tubulação"
- ]
-},
-
-{
- nome:"Galpão",
- itens:[
-  "Telhado",
-  "Hidráulica",
-  "Ralos"
- ]
-},
-
-{
- nome:"Recepção",
- itens:[
-  "Móveis",
-  "Elétrica",
-  "Estrutura",
-  "Piso",
-  "Portas",
-  "Vidros"
- ]
-},
-
-{
- nome:"Prédio de Escritórios - Térreo",
- itens:[
-  "Banheiros",
-  "Elétrica",
-  "Hidráulica",
-  "Portas",
-  "Esgoto",
-  "Aparelhos sanitários",
-  "Áreas comuns"
- ]
-},
-
-{
- nome:"Prédio de Escritórios - 1º andar",
- itens:[
-  "Banheiros",
-  "Elétrica",
-  "Hidráulica",
-  "Portas",
-  "Esgoto",
-  "Aparelhos sanitários",
-  "Áreas comuns"
- ]
-},
-
-{
- nome:"Prédio de Escritórios - 2º andar",
- itens:[
-  "Banheiros",
-  "Elétrica",
-  "Hidráulica",
-  "Portas",
-  "Esgoto",
-  "Aparelhos sanitários",
-  "Áreas comuns"
- ]
-},
-
-{
- nome:"Prédio de Escritórios - Subsolo",
- itens:[
-  "Banheiros",
-  "Elétrica",
-  "Hidráulica",
-  "Portas",
-  "Esgoto",
-  "Aparelhos sanitários"
- ]
-},
-
-{
- nome:"Cabine Secundária",
- itens:[
-  "Iluminação",
-  "Equipamentos",
-  "Estrutura",
-  "Cabos",
-  "Portas"
- ]
-},
-
-{
- nome:"Nobreak",
- itens:[
-  "Iluminação",
-  "Equipamentos",
-  "Estrutura",
-  "Cabos",
-  "Portas"
- ]
-},
-
-{
- nome:"Gerador",
- itens:[
-  "Abastecimento",
-  "Manutenção do motor",
-  "Iluminação",
-  "Testes"
- ]
-},
-
-{
- nome:"Caixas d'água inferior",
- itens:[
-  "Bombas",
-  "Elétrica",
-  "Nível da água",
-  "Testes"
- ]
-},
-
-{
- nome:"Caixa d'água superior",
- itens:[
-  "Bomba principal",
-  "Tubulação",
-  "Filtragem",
-  "Nível das caixas"
- ]
-},
-
-{
- nome:"Sala Manutenção",
- itens:[
-  "Elétrica",
-  "Hidráulica",
-  "Limpeza e organização",
-  "Ferramentas",
-  "Estoque de materiais"
- ]
-},
-
-{
- nome:"Áreas externas / outras",
- itens:[
-  "Diversos"
- ]
-},
-
-{
- nome:"Caixa + bombas incêndio",
- itens:[
-  "Diversos"
- ]
-},
-
-{
- nome:"Laboratório",
- itens:[
-  "Diversos"
- ]
-},
-
-{
- nome:"Laje",
- itens:[
-  "Diversos"
- ]
-}
-
+{ nome:"Portaria", itens:["Elétrica", "Hidráulica", "Portões", "Esgoto", "Jardins", "Passeio"] },
+{ nome:"Cabine Primária", itens:["Iluminação", "Equipamentos", "Estrutura", "Cabos", "Portas"] },
+{ nome:"Poço Artesiano", itens:["Cercado", "Bomba", "Tubulação"] },
+{ nome:"Galpão", itens:["Telhado", "Hidráulica", "Ralos"] },
+{ nome:"Recepção", itens:["Móveis", "Elétrica", "Estrutura", "Piso", "Portas", "Vidros"] },
+{ nome:"Prédio de Escritórios - Térreo", itens:["Banheiros", "Elétrica", "Hidráulica", "Portas", "Esgoto", "Aparelhos sanitários", "Áreas comuns"] },
+{ nome:"Prédio de Escritórios - 1º andar", itens:["Banheiros", "Elétrica", "Hidráulica", "Portas", "Esgoto", "Aparelhos sanitários", "Áreas comuns"] },
+{ nome:"Prédio de Escritórios - 2º andar", itens:["Banheiros", "Elétrica", "Hidráulica", "Portas", "Esgoto", "Aparelhos sanitários", "Áreas comuns"] },
+{ nome:"Prédio de Escritórios - Subsolo", itens:["Banheiros", "Elétrica", "Hidráulica", "Portas", "Esgoto", "Aparelhos sanitários"] },
+{ nome:"Cabine Secundária", itens:["Iluminação", "Equipamentos", "Estrutura", "Cabos", "Portas"] },
+{ nome:"Nobreak", itens:["Iluminação", "Equipamentos", "Estrutura", "Cabos", "Portas"] },
+{ nome:"Gerador", itens:["Abastecimento", "Manutenção do motor", "Iluminação", "Testes"] },
+{ nome:"Caixas d'água inferior", itens:["Bombas", "Elétrica", "Nível da água", "Testes"] },
+{ nome:"Caixa d'água superior", itens:["Bomba principal", "Tubulação", "Filtragem", "Nível das caixas"] },
+{ nome:"Sala Manutenção", itens:["Elétrica", "Hidráulica", "Limpeza e organização", "Ferramentas", "Estoque de materiais"] },
+{ nome:"Áreas externas / outras", itens:["Diversos"] },
+{ nome:"Caixa + bombas incêndio", itens:["Diversos"] },
+{ nome:"Laboratório", itens:["Diversos"] },
+{ nome:"Laje", itens:["Diversos"] }
 ];
 
-
-const STORAGE={
-
-ordens:"PMP_EDAG_OS_V3",
-
-locais:"PMP_EDAG_LOCAIS_V3",
-
-tipos:"PMP_EDAG_TIPOS_V3",
-
-responsaveis:"PMP_EDAG_RESPONSAVEIS_V3",
-
-fornecedores:"PMP_EDAG_FORNECEDORES_V3",
-
-equipamentos:"PMP_EDAG_EQUIPAMENTOS_V3",
-
-itens:"PMP_EDAG_ITENS_V3",
-
-programacoes:"PMP_EDAG_PROGRAMACOES_V3",
-
-areas:"PMP_EDAG_AREAS_V3",
-
-config:"PMP_EDAG_CONFIG_V3"
-
+const STORAGE = {
+ordens: "PMP_EDAG_OS_V4",
+locais: "PMP_EDAG_LOCAIS_V4",
+tipos: "PMP_EDAG_TIPOS_V4",
+responsaveis: "PMP_EDAG_RESPONSAVEIS_V4",
+fornecedores: "PMP_EDAG_FORNECEDORES_V4",
+equipamentos: "PMP_EDAG_EQUIPAMENTOS_V4",
+itens: "PMP_EDAG_ITENS_V4",
+programacoes: "PMP_EDAG_PROGRAMACOES_V4",
+areas: "PMP_EDAG_AREAS_V4",
+config: "PMP_EDAG_CONFIG_V4",
+atividadesCatalogo: "PMP_EDAG_ATIVIDADES_CAT_V4"
 };
 
+let ordens = JSON.parse(localStorage.getItem(STORAGE.ordens) || "[]");
+let locais = JSON.parse(localStorage.getItem(STORAGE.locais) || '["Portaria principal","Cabine Primária","Cabine Secundária","Poço Artesiano","Galpão","Recepção","Prédio de Escritórios","Gerador","Sala de Manutenção","Áreas externas"]');
+let tipos = JSON.parse(localStorage.getItem(STORAGE.tipos) || '["Preventiva","Corretiva","Inspeção","Emergencial","Vistoria"]');
+let responsaveis = JSON.parse(localStorage.getItem(STORAGE.responsaveis) || '["Facilities","Manutenção","Empresa terceirizada"]');
+let fornecedores = JSON.parse(localStorage.getItem(STORAGE.fornecedores) || '[]');
+let equipamentos = JSON.parse(localStorage.getItem(STORAGE.equipamentos) || "[]");
+let itensManutencao = JSON.parse(localStorage.getItem(STORAGE.itens) || "[]");
+let programacoes = JSON.parse(localStorage.getItem(STORAGE.programacoes) || "[]");
+let atividadesCatalogo = JSON.parse(localStorage.getItem(STORAGE.atividadesCatalogo) || "[]");
 
-let ordens=
-JSON.parse(localStorage.getItem(STORAGE.ordens)||"[]");
+let areasSalvas = JSON.parse(localStorage.getItem(STORAGE.areas) || "null");
+if(areasSalvas) AREAS = areasSalvas;
 
-
-let locais=
-JSON.parse(
-localStorage.getItem(STORAGE.locais)||
-'["Portaria principal","Cabine Primária","Cabine Secundária","Poço Artesiano","Galpão","Recepção","Prédio de Escritórios","Gerador","Sala de Manutenção","Áreas externas"]'
-);
-
-
-let tipos=
-JSON.parse(
-localStorage.getItem(STORAGE.tipos)||
-'["Preventiva","Corretiva","Inspeção","Emergencial","Vistoria"]'
-);
-
-
-let responsaveis=
-JSON.parse(
-localStorage.getItem(STORAGE.responsaveis)||
-'["Facilities","Manutenção","Empresa terceirizada"]'
-);
-
-
-let fornecedores=
-JSON.parse(
-localStorage.getItem(STORAGE.fornecedores)||
-'[]'
-);
-
-
-let equipamentos=
-JSON.parse(
-localStorage.getItem(STORAGE.equipamentos)||
-"[]"
-);
-
-
-let itensManutencao=
-JSON.parse(
-localStorage.getItem(STORAGE.itens)||
-"[]"
-);
-
-
-let programacoes=
-JSON.parse(
-localStorage.getItem(STORAGE.programacoes)||
-"[]"
-);
-
-
-let areasSalvas=
-JSON.parse(
-localStorage.getItem(STORAGE.areas)||"null"
-);
-
-
-if(areasSalvas)
-AREAS=areasSalvas;
-
-
-let config=
-JSON.parse(
-localStorage.getItem(STORAGE.config)||
-'{"responsavel":"Gestão de Facilities","meta":80}'
-);
-
-
-let fotosTemporarias=[];
-
-let dataCalendario=new Date();
-
-
-/* =========================================================
-   FUNÇÕES BÁSICAS
-========================================================= */
+let config = JSON.parse(localStorage.getItem(STORAGE.config) || '{"responsavel":"Gestão de Facilities","meta":80}');
+let fotosTemporarias = [];
+let dataCalendario = new Date();
 
 function hoje(){
-
-let d=new Date();
-
-return d.getFullYear()+"-"+
-String(d.getMonth()+1).padStart(2,"0")+"-"+
-String(d.getDate()).padStart(2,"0");
-
+let d = new Date();
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
-
 
 function escapar(t){
-
-if(t===undefined||t===null)
-return "";
-
-return String(t)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
+if(t === undefined || t === null) return "";
+return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
-
 
 function formatarData(d){
-
-if(!d)
-return "-";
-
-let p=d.split("-");
-
-if(p.length!==3)
-return d;
-
+if(!d) return "-";
+let p = d.split("-");
+if(p.length !== 3) return d;
 return p[2]+"/"+p[1]+"/"+p[0];
-
 }
-
 
 function salvarTudo(){
-
-localStorage.setItem(
-STORAGE.ordens,
-JSON.stringify(ordens)
-);
-
-localStorage.setItem(
-STORAGE.locais,
-JSON.stringify(locais)
-);
-
-localStorage.setItem(
-STORAGE.tipos,
-JSON.stringify(tipos)
-);
-
-localStorage.setItem(
-STORAGE.responsaveis,
-JSON.stringify(responsaveis)
-);
-
-localStorage.setItem(
-STORAGE.fornecedores,
-JSON.stringify(fornecedores)
-);
-
-localStorage.setItem(
-STORAGE.equipamentos,
-JSON.stringify(equipamentos)
-);
-
-localStorage.setItem(
-STORAGE.itens,
-JSON.stringify(itensManutencao)
-);
-
-localStorage.setItem(
-STORAGE.programacoes,
-JSON.stringify(programacoes)
-);
-
-localStorage.setItem(
-STORAGE.areas,
-JSON.stringify(AREAS)
-);
-
+localStorage.setItem(STORAGE.ordens, JSON.stringify(ordens));
+localStorage.setItem(STORAGE.locais, JSON.stringify(locais));
+localStorage.setItem(STORAGE.tipos, JSON.stringify(tipos));
+localStorage.setItem(STORAGE.responsaveis, JSON.stringify(responsaveis));
+localStorage.setItem(STORAGE.fornecedores, JSON.stringify(fornecedores));
+localStorage.setItem(STORAGE.equipamentos, JSON.stringify(equipamentos));
+localStorage.setItem(STORAGE.itens, JSON.stringify(itensManutencao));
+localStorage.setItem(STORAGE.programacoes, JSON.stringify(programacoes));
+localStorage.setItem(STORAGE.areas, JSON.stringify(AREAS));
+localStorage.setItem(STORAGE.atividadesCatalogo, JSON.stringify(atividadesCatalogo));
 }
-
 
 function salvarConfig(){
-
-localStorage.setItem(
-STORAGE.config,
-JSON.stringify(config)
-);
-
-
+localStorage.setItem(STORAGE.config, JSON.stringify(config));
 }
-
 
 function gerarID(prefixo="ID"){
-
-return prefixo+"-"+Date.now()+"-"+Math.random()
-.toString(36)
-.substring(2,7)
-.toUpperCase();
-
+return prefixo+"-"+Date.now()+"-"+Math.random().toString(36).substring(2,7).toUpperCase();
 }
 
-
-/* =========================================================
-   DATA / PERIODICIDADE
-========================================================= */
-
-function adicionarPeriodo(data,periodicidade){
-
-let d=new Date(data+"T12:00:00");
-
+function adicionarPeriodo(data, periodicidade){
+let d = new Date(data+"T12:00:00");
 switch(periodicidade){
-
-case"Diária":
- d.setDate(d.getDate()+1);
- break;
-
-case"Semanal":
- d.setDate(d.getDate()+7);
- break;
-
-case"Quinzenal":
- d.setDate(d.getDate()+15);
- break;
-
-case"Mensal":
- d.setMonth(d.getMonth()+1);
- break;
-
-case"Bimestral":
- d.setMonth(d.getMonth()+2);
- break;
-
-case"Trimestral":
- d.setMonth(d.getMonth()+3);
- break;
-
-case"Semestral":
- d.setMonth(d.getMonth()+6);
- break;
-
-case"Anual":
- d.setFullYear(d.getFullYear()+1);
- break;
-
+case "Diária": d.setDate(d.getDate()+1); break;
+case "Semanal": d.setDate(d.getDate()+7); break;
+case "Quinzenal": d.setDate(d.getDate()+15); break;
+case "Mensal": d.setMonth(d.getMonth()+1); break;
+case "Bimestral": d.setMonth(d.getMonth()+2); break;
+case "Trimestral": d.setMonth(d.getMonth()+3); break;
+case "Semestral": d.setMonth(d.getMonth()+6); break;
+case "Anual": d.setFullYear(d.getFullYear()+1); break;
 }
-
-return d.getFullYear()+"-"+
-String(d.getMonth()+1).padStart(2,"0")+"-"+
-String(d.getDate()).padStart(2,"0");
-
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
-
 
 function calcularStatusProgramacao(p){
-
-if(!p.proxima)
-return"Sem data";
-
-if(p.proxima<hoje())
-return"Vencida";
-
-let d1=new Date();
-let d2=new Date(p.proxima+"T12:00:00");
-
-let dias=Math.ceil(
-(d2-d1)/(1000*60*60*24)
-);
-
-if(dias<=7)
-return"Próxima";
-
-return"Em dia";
-
+if(!p.proxima) return "Sem data";
+if(p.proxima < hoje()) return "Vencida";
+let d1 = new Date();
+let d2 = new Date(p.proxima+"T12:00:00");
+let dias = Math.ceil((d2 - d1)/(1000*60*60*24));
+if(dias <= 7) return "Próxima";
+return "Em dia";
 }
-
-
-/* =========================================================
-   DEMONSTRAÇÃO
-========================================================= */
 
 function criarDemonstracao(){
+if(ordens.length || itensManutencao.length || equipamentos.length || atividadesCatalogo.length) return;
 
-if(ordens.length||
-itensManutencao.length||
-equipamentos.length)
-return;
-
-
-let equipamento={
-
-id:gerarID("EQ"),
-
-area:"Gerador",
-
-local:"Gerador",
-
-nome:"Gerador principal",
-
-patrimonio:"GER-001",
-
-fabricante:"",
-
-modelo:"",
-
-serie:"",
-
-status:"Ativo",
-
-observacoes:"Equipamento principal de emergência."
-
+let ativCat = {
+id: gerarID("AC"),
+nome: "Teste de funcionamento do gerador",
+tipo: "Preventiva",
+tempo: 1.5,
+procedimento: "Realizar partida do equipamento e verificar painel.",
+checklist: "Partida elétrica;Medição de tensão;Verificação de ruídos"
 };
+atividadesCatalogo.push(ativCat);
 
-
+let equipamento = {
+id: gerarID("EQ"),
+area: "Gerador",
+local: "Gerador",
+nome: "Gerador principal",
+patrimonio: "GER-001",
+fabricante: "Stemac",
+modelo: "QX-100",
+serie: "98765",
+status: "Ativo",
+observacoes: "Equipamento principal de emergência."
+};
 equipamentos.push(equipamento);
 
-
-let item={
-
-id:gerarID("IT"),
-
-area:"Gerador",
-
-local:"Gerador",
-
-equipamentoId:equipamento.id,
-
-nome:"Teste de funcionamento do gerador",
-
-tipo:"Preventiva",
-
-periodicidade:"Semanal",
-
-prioridade:"Alta",
-
-status:"Ativo",
-
-procedimento:"Realizar partida do equipamento e verificar funcionamento.",
-
-checklist:"Partida;Tensão;Ruídos;Funcionamento"
-
+let item = {
+id: gerarID("IT"),
+area: "Gerador",
+local: "Gerador",
+equipamentoId: equipamento.id,
+nome: ativCat.nome,
+tipo: ativCat.tipo,
+periodicidade: "Semanal",
+prioridade: "Alta",
+status: "Ativo",
+procedimento: ativCat.procedimento,
+checklist: ativCat.checklist
 };
-
-
 itensManutencao.push(item);
 
-
 programacoes.push({
-
-id:gerarID("PG"),
-
-itemId:item.id,
-
-periodicidade:"Semanal",
-
-ultima:hoje(),
-
-proxima:adicionarPeriodo(
-hoje(),
-"Semanal"
-),
-
-responsavel:"Facilities",
-
-auto:true
-
+id: gerarID("PG"),
+itemId: item.id,
+periodicidade: "Semanal",
+ultima: hoje(),
+proxima: adicionarPeriodo(hoje(), "Semanal"),
+responsavel: "Facilities",
+auto: true
 });
-
 
 ordens.push({
-
-id:gerarID("OS"),
-
-itemId:item.id,
-
-titulo:"Teste de funcionamento do gerador",
-
-area:"Gerador",
-
-local:"Gerador",
-
-equipamentoId:equipamento.id,
-
-tipo:"Preventiva",
-
-prioridade:"Alta",
-
-status:"Aberta",
-
-data:hoje(),
-
-horario:"10:00",
-
-responsavel:"Facilities",
-
-fornecedor:"",
-
-checklist:item.checklist,
-
-procedimento:item.procedimento,
-
-observacoes:"",
-
-fotos:[]
-
+id: gerarID("OS"),
+itemId: item.id,
+titulo: item.nome,
+area: "Gerador",
+local: "Gerador",
+equipamentoId: equipamento.id,
+tipo: "Preventiva",
+prioridade: "Alta",
+status: "Aberta",
+data: hoje(),
+horario: "10:00",
+responsavel: "Facilities",
+fornecedor: "",
+checklist: item.checklist,
+procedimento: item.procedimento,
+observacoes: "",
+fotos: []
 });
-
 
 salvarTudo();
-
 }
 
-
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
-
-document
-.querySelectorAll(".menu button")
-.forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-mostrarPagina(btn.dataset.page);
-
+document.querySelectorAll(".menu button").forEach(btn=>{
+btn.addEventListener("click",()=>{ mostrarPagina(btn.dataset.page); });
 });
-
-});
-
 
 function mostrarPagina(id){
-
-document
-.querySelectorAll(".menu button")
-.forEach(btn=>{
-
-btn.classList.toggle(
-"active",
-btn.dataset.page===id
-);
-
-});
-
-
-document
-.querySelectorAll(".page")
-.forEach(page=>{
-
-page.classList.toggle(
-"active",
-page.id===id
-);
-
-});
-
-
+document.querySelectorAll(".menu button").forEach(btn=>{ btn.classList.toggle("active", btn.dataset.page === id); });
+document.querySelectorAll(".page").forEach(page=>{ page.classList.toggle("active", page.id === id); });
 renderTudo();
-
 }
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
 
 function renderDashboard(){
+let total = ordens.length;
+let abertas = ordens.filter(o=>o.status==="Aberta").length;
+let andamento = ordens.filter(o=>o.status==="Em andamento").length;
+let concluidas = ordens.filter(o=>o.status==="Concluída").length;
+let atrasadas = ordens.filter(o=>o.status!=="Concluída" && o.data<hoje()).length;
+let programadas = programacoes.filter(p=>calcularStatusProgramacao(p)!=="Vencida").length;
 
-let total=ordens.length;
+document.getElementById("kpiTotal").textContent = total;
+document.getElementById("kpiAbertas").textContent = abertas;
+document.getElementById("kpiAndamento").textContent = andamento;
+document.getElementById("kpiConcluidas").textContent = concluidas;
+document.getElementById("kpiAtrasadas").textContent = atrasadas;
+document.getElementById("kpiProgramadas").textContent = programadas;
 
-let abertas=
-ordens.filter(
-o=>o.status==="Aberta"
-).length;
+let perc = total ? Math.round(concluidas/total*100) : 0;
+document.getElementById("barraProgresso").style.width = perc+"%";
+document.getElementById("percentual").innerHTML = `<b>${perc}%</b> concluído<br><span class='subtitle'>${concluidas} de ${total} OS. Meta: ${config.meta}%</span>`;
 
-let andamento=
-ordens.filter(
-o=>o.status==="Em andamento"
-).length;
+let lista = ordens.filter(o=>o.status!=="Concluída").sort((a,b)=>{
+const peso={ Alta:1, Média:2, Baixa:3 };
+return peso[a.prioridade] - peso[b.prioridade];
+}).slice(0,8);
 
-let concluidas=
-ordens.filter(
-o=>o.status==="Concluída"
-).length;
-
-let atrasadas=
-ordens.filter(
-o=>o.status!=="Concluída" &&
-o.data<hoje()
-).length;
-
-let programadas=
-programacoes.filter(
-p=>calcularStatusProgramacao(p)!=="Vencida"
-).length;
-
-
-document.getElementById("kpiTotal").textContent=total;
-
-document.getElementById("kpiAbertas").textContent=abertas;
-
-document.getElementById("kpiAndamento").textContent=andamento;
-
-document.getElementById("kpiConcluidas").textContent=concluidas;
-
-document.getElementById("kpiAtrasadas").textContent=atrasadas;
-
-document.getElementById("kpiProgramadas").textContent=programadas;
-
-
-let perc=total?
-Math.round(concluidas/total*100):
-0;
-
-
-document.getElementById(
-"barraProgresso"
-).style.width=perc+"%";
-
-
-document.getElementById(
-"percentual"
-).innerHTML=
-"<b>"+perc+"%</b> concluído<br>"+
-"<span class='subtitle'>"+
-concluidas+
-" de "+
-total+
-" OS. Meta: "+
-config.meta+
-"%</span>";
-
-
-let lista=
-ordens
-.filter(o=>o.status!=="Concluída")
-.sort((a,b)=>{
-
-const peso={
-Alta:1,
-Média:2,
-Baixa:3
-};
-
-return peso[a.prioridade]-peso[b.prioridade];
-
-})
-.slice(0,8);
-
-
-let div=
-document.getElementById("pendencias");
-
-
+let div = document.getElementById("pendencias");
 if(!lista.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhuma pendência.</div>";
-
+div.innerHTML = "<div class='empty'>Nenhuma pendência.</div>";
 return;
-
 }
-
-
-div.innerHTML=
-lista.map(o=>{
-
-let dot=
-o.status==="Em andamento"
-?"yellow":
-"red";
-
-return`
-
+div.innerHTML = lista.map(o=>{
+let dot = o.status==="Em andamento"?"yellow":"red";
+return `
 <div class="task">
-
 <span class="dot ${dot}"></span>
-
 <div class="task-content">
-
 <div class="task-title">
-
 ${escapar(o.titulo)}
-
-<span class="badge ${
-o.prioridade==="Alta"
-?"badge-alta":
-o.prioridade==="Baixa"
-?"badge-baixa":
-"badge-media"
-}">
-
-${escapar(o.prioridade)}
-
-</span>
-
+<span class="badge ${o.prioridade==="Alta"?"badge-alta":o.prioridade==="Baixa"?"badge-baixa":"badge-media"}">${escapar(o.prioridade)}</span>
 </div>
-
-<div class="meta">
-
-${escapar(o.area)}
-•
-${formatarData(o.data)}
-•
-${escapar(o.status)}
-
+<div class="meta">${escapar(o.area)} • ${formatarData(o.data)} • ${escapar(o.status)}</div>
 </div>
-
+<button class="btn btn-light" onclick="editarOS('${o.id}')">Abrir</button>
 </div>
-
-<button
-class="btn btn-light"
-onclick="editarOS('${o.id}')">
-
-Abrir
-
-</button>
-
-</div>
-
 `;
-
 }).join("");
-
 }
 
-
-/* =========================================================
-   FILTROS
-========================================================= */
-
-function preencherSelect(
-id,
-itens,
-primeiro="Todos"
-){
-
-let s=document.getElementById(id);
-
-if(!s)
-return;
-
-let valor=s.value;
-
-s.innerHTML=
-`<option value="">${primeiro}</option>`+
-itens.map(x=>
-`<option value="${escapar(x)}">${escapar(x)}</option>`
-).join("");
-
-s.value=valor;
-
+function preencherSelect(id, itens, primeiro="Todos"){
+let s = document.getElementById(id);
+if(!s) return;
+let valor = s.value;
+s.innerHTML = `<option value="">${primeiro}</option>` + itens.map(x=>`<option value="${escapar(x)}">${escapar(x)}</option>`).join("");
+s.value = valor;
 }
-
 
 function carregarFiltros(){
-
-preencherSelect(
-"filtroArea",
-AREAS.map(a=>a.nome),
-"Todas as áreas"
-);
-
-preencherSelect(
-"filtroLocal",
-locais,
-"Todos os locais"
-);
-
-preencherSelect(
-"filtroTipo",
-tipos,
-"Todos os tipos"
-);
-
-preencherSelect(
-"filtroItemArea",
-AREAS.map(a=>a.nome),
-"Todas as áreas"
-);
-
-preencherSelect(
-"filtroItemEquipamento",
-equipamentos.map(e=>e.nome),
-"Todos os equipamentos"
-);
-
-preencherSelect(
-"relArea",
-AREAS.map(a=>a.nome),
-"Todas as áreas"
-);
-
-preencherSelect(
-"relTipo",
-tipos,
-"Todos os tipos"
-);
-
+preencherSelect("filtroArea", AREAS.map(a=>a.nome), "Todas as áreas");
+preencherSelect("filtroLocal", locais, "Todos os locais");
+preencherSelect("filtroTipo", tipos, "Todos os tipos");
+preencherSelect("filtroItemArea", AREAS.map(a=>a.nome), "Todas as áreas");
+preencherSelect("filtroItemEquipamento", equipamentos.map(e=>e.nome), "Todos os equipamentos");
+preencherSelect("filtroAtivTipo", tipos, "Todos os tipos");
+preencherSelect("relArea", AREAS.map(a=>a.nome), "Todas as áreas");
+preencherSelect("relTipo", tipos, "Todos os tipos");
 }
 
+// CATÁLOGO DE ATIVIDADES
+function renderAtividadesCatalogo(){
+let busca = (document.getElementById("buscaAtividade")?.value || "").toLowerCase();
+let tipo = document.getElementById("filtroAtivTipo")?.value || "";
 
-/* =========================================================
-   ORDENS
-========================================================= */
-
-function renderOrdens(){
-
-let busca=
-(
-document.getElementById("busca")?.value||
-""
-).toLowerCase();
-
-let area=
-document.getElementById("filtroArea")?.value||"";
-
-let local=
-document.getElementById("filtroLocal")?.value||"";
-
-let status=
-document.getElementById("filtroStatus")?.value||"";
-
-let tipo=
-document.getElementById("filtroTipo")?.value||"";
-
-
-let lista=ordens.filter(o=>{
-
-let equipamento=
-equipamentos.find(
-e=>e.id===o.equipamentoId
-);
-
-
-let texto=[
-o.titulo,
-o.area,
-o.local,
-o.tipo,
-o.responsavel,
-equipamento?.nome||""
-].join(" ").toLowerCase();
-
-
-return(
-!busca||
-texto.includes(busca)
-)
-&&(!area||o.area===area)
-&&(!local||o.local===local)
-&&(!status||o.status===status)
-&&(!tipo||o.tipo===tipo);
-
+let lista = atividadesCatalogo.filter(a=>{
+let texto = [a.nome, a.tipo, a.procedimento].join(" ").toLowerCase();
+return (!busca || texto.includes(busca)) && (!tipo || a.tipo === tipo);
 });
 
-
-lista.sort(
-(a,b)=>a.data.localeCompare(b.data)
-);
-
-
-let div=
-document.getElementById("tabelaOrdens");
-
-
+let div = document.getElementById("tabelaAtividadesCatalogo");
 if(!lista.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhuma OS encontrada.</div>";
-
+div.innerHTML = "<div class='empty'>Nenhuma atividade padronizada cadastrada.</div>";
 return;
-
 }
 
-
-div.innerHTML=`
-
+div.innerHTML = `
 <table>
-
 <thead>
-
 <tr>
+<th>Atividade</th>
+<th>Tipo</th>
+<th>Tempo Est. (h)</th>
+<th>Procedimento / Checklist</th>
+<th>Ação</th>
+</tr>
+</thead>
+<tbody>
+${lista.map(a=>`
+<tr>
+<td><b>${escapar(a.nome)}</b></td>
+<td>${escapar(a.tipo)}</td>
+<td>${a.tempo || 1.0}h</td>
+<td><span class="small">${escapar(a.procedimento || "-")}</span></td>
+<td><button class="btn btn-light" onclick="editarAtividadeCatalogo('${a.id}')">Editar</button></td>
+</tr>
+`).join("")}
+</tbody>
+</table>
+`;
+}
 
+function novaAtividadeCatalogo(){
+document.getElementById("tituloModalAtividadeCatalogo").textContent = "Nova Atividade Padronizada";
+document.getElementById("ativCatId").value = "";
+preencherTiposSelect("ativCatTipo");
+document.getElementById("ativCatNome").value = "";
+document.getElementById("ativCatTempo").value = "1.0";
+document.getElementById("ativCatProcedimento").value = "";
+document.getElementById("ativCatChecklist").value = "";
+document.getElementById("btnExcluirAtivCat").style.display = "none";
+document.getElementById("modalAtividadeCatalogo").classList.add("show");
+}
+
+function editarAtividadeCatalogo(id){
+let a = atividadesCatalogo.find(x=>x.id===id);
+if(!a) return;
+document.getElementById("tituloModalAtividadeCatalogo").textContent = "Editar Atividade Padronizada";
+document.getElementById("ativCatId").value = a.id;
+preencherTiposSelect("ativCatTipo", a.tipo);
+document.getElementById("ativCatNome").value = a.nome || "";
+document.getElementById("ativCatTempo").value = a.tempo || 1.0;
+document.getElementById("ativCatProcedimento").value = a.procedimento || "";
+document.getElementById("ativCatChecklist").value = a.checklist || "";
+document.getElementById("btnExcluirAtivCat").style.display = "block";
+document.getElementById("modalAtividadeCatalogo").classList.add("show");
+}
+
+function fecharModalAtividadeCatalogo(){
+document.getElementById("modalAtividadeCatalogo").classList.remove("show");
+}
+
+function salvarAtividadeCatalogo(){
+let nome = document.getElementById("ativCatNome").value.trim();
+if(!nome){ alert("Informe o nome da atividade."); return; }
+let id = document.getElementById("ativCatId").value;
+let dados = {
+nome,
+tipo: document.getElementById("ativCatTipo").value,
+tempo: parseFloat(document.getElementById("ativCatTempo").value) || 1.0,
+procedimento: document.getElementById("ativCatProcedimento").value.trim(),
+checklist: document.getElementById("ativCatChecklist").value.trim()
+};
+if(id){
+let a = atividadesCatalogo.find(x=>x.id===id);
+Object.assign(a, dados);
+} else {
+atividadesCatalogo.push({ id: gerarID("AC"), ...dados });
+}
+salvarTudo();
+fecharModalAtividadeCatalogo();
+renderTudo();
+}
+
+function excluirAtividadeCatalogo(){
+let id = document.getElementById("ativCatId").value;
+if(!confirm("Excluir esta atividade padronizada?")) return;
+atividadesCatalogo = atividadesCatalogo.filter(x=>x.id!==id);
+salvarTudo();
+fecharModalAtividadeCatalogo();
+renderTudo();
+}
+
+// ITENS DE MANUTENÇÃO
+function preencherSelectAtividadesCatalogo(id, valor=""){
+let s = document.getElementById(id);
+if(!s) return;
+s.innerHTML = "<option value=''>-- Selecione uma atividade padronizada --</option>" + atividadesCatalogo.map(a=>`<option value="${a.id}">${escapar(a.nome)} (${escapar(a.tipo)})</option>`).join("");
+if(valor) s.value = valor;
+}
+
+function preencherItemComCatalogo(){
+let catId = document.getElementById("itemAtividadeCatalogo").value;
+if(!catId) return;
+let a = atividadesCatalogo.find(x=>x.id===catId);
+if(!a) return;
+document.getElementById("itemNome").value = a.nome;
+document.getElementById("itemTipo").value = a.tipo;
+document.getElementById("itemProcedimento").value = a.procedimento;
+document.getElementById("itemChecklist").value = a.checklist;
+}
+
+// ORDENS DE SERVIÇO
+function renderOrdens(){
+let busca = (document.getElementById("busca")?.value || "").toLowerCase();
+let area = document.getElementById("filtroArea")?.value || "";
+let local = document.getElementById("filtroLocal")?.value || "";
+let status = document.getElementById("filtroStatus")?.value || "";
+let tipo = document.getElementById("filtroTipo")?.value || "";
+
+let lista = ordens.filter(o=>{
+let equipamento = equipamentos.find(e=>e.id===o.equipamentoId);
+let texto = [o.titulo, o.area, o.local, o.tipo, o.responsavel, equipamento?.nome||""].join(" ").toLowerCase();
+return (!busca || texto.includes(busca)) && (!area || o.area===area) && (!local || o.local===local) && (!status || o.status===status) && (!tipo || o.tipo===tipo);
+});
+lista.sort((a,b)=>a.data.localeCompare(b.data));
+
+let div = document.getElementById("tabelaOrdens");
+if(!lista.length){ div.innerHTML = "<div class='empty'>Nenhuma OS encontrada.</div>"; return; }
+
+div.innerHTML = `
+<table>
+<thead>
+<tr>
 <th>Data</th>
 <th>OS</th>
 <th>Área</th>
@@ -3429,155 +1843,44 @@ div.innerHTML=`
 <th>Status</th>
 <th>Fotos</th>
 <th>Ação</th>
-
 </tr>
-
 </thead>
-
 <tbody>
-
 ${lista.map(o=>{
-
-let eq=
-equipamentos.find(
-e=>e.id===o.equipamentoId
-);
-
-
-let atrasada=
-o.status!=="Concluída" &&
-o.data<hoje();
-
-
-return`
-
+let eq = equipamentos.find(e=>e.id===o.equipamentoId);
+let atrasada = o.status!=="Concluída" && o.data<hoje();
+return `
 <tr>
-
+<td>${formatarData(o.data)}<br><span class="small">${escapar(o.horario||"")}</span></td>
+<td><b>${escapar(o.id)}</b><br>${escapar(o.titulo)}</td>
+<td>${escapar(o.area)}</td>
+<td>${escapar(o.local||"-")}</td>
+<td>${escapar(eq?.nome||"-")}</td>
+<td>${escapar(o.tipo)}</td>
+<td><span class="badge ${o.prioridade==="Alta"?"badge-alta":o.prioridade==="Baixa"?"badge-baixa":"badge-media"}">${escapar(o.prioridade)}</span></td>
 <td>
-${formatarData(o.data)}
-<br>
-<span class="small">
-${escapar(o.horario||"")}
-</span>
+<span class="badge ${o.status==="Concluída"?"badge-concluida":o.status==="Em andamento"?"badge-andamento":"badge-aberta"}">${escapar(o.status)}</span>
+${atrasada?"<span class='badge badge-atrasada'>Atrasada</span>":""}
 </td>
-
-<td>
-<b>${escapar(o.id)}</b>
-<br>
-${escapar(o.titulo)}
-</td>
-
-<td>
-${escapar(o.area)}
-</td>
-
-<td>
-${escapar(o.local||"-")}
-</td>
-
-<td>
-${escapar(eq?.nome||"-")}
-</td>
-
-<td>
-${escapar(o.tipo)}
-</td>
-
-<td>
-
-<span class="badge ${
-o.prioridade==="Alta"
-?"badge-alta":
-o.prioridade==="Baixa"
-?"badge-baixa":
-"badge-media"
-}">
-
-${escapar(o.prioridade)}
-
-</span>
-
-</td>
-
-<td>
-
-<span class="badge ${
-o.status==="Concluída"
-?"badge-concluida":
-o.status==="Em andamento"
-?"badge-andamento":
-"badge-aberta"
-}">
-
-${escapar(o.status)}
-
-</span>
-
-${atrasada?
-"<span class='badge badge-atrasada'>Atrasada</span>":
-""}
-
-</td>
-
-<td>
-📷 ${o.fotos?.length||0}
-</td>
-
-<td>
-
-<button
-class="btn btn-light"
-onclick="editarOS('${o.id}')">
-Editar
-</button>
-
-</td>
-
+<td>📷 ${o.fotos?.length||0}</td>
+<td><button class="btn btn-light" onclick="editarOS('${o.id}')">Editar</button></td>
 </tr>
-
 `;
-
 }).join("")}
-
 </tbody>
-
 </table>
-
 `;
-
 }
 
-
-/* =========================================================
-   EQUIPAMENTOS
-========================================================= */
-
+// EQUIPAMENTOS
 function renderEquipamentos(){
+let div = document.getElementById("tabelaEquipamentos");
+if(!equipamentos.length){ div.innerHTML = "<div class='empty'>Nenhum equipamento cadastrado.</div>"; return; }
 
-let div=
-document.getElementById(
-"tabelaEquipamentos"
-);
-
-
-if(!equipamentos.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhum equipamento cadastrado.</div>";
-
-return;
-
-}
-
-
-div.innerHTML=`
-
+div.innerHTML = `
 <table>
-
 <thead>
-
 <tr>
-
 <th>Equipamento</th>
 <th>Área</th>
 <th>Local</th>
@@ -3587,150 +1890,50 @@ div.innerHTML=`
 <th>Status</th>
 <th>Itens</th>
 <th>Ação</th>
-
 </tr>
-
 </thead>
-
 <tbody>
-
 ${equipamentos.map(e=>{
-
-let qtd=
-itensManutencao.filter(
-i=>i.equipamentoId===e.id
-).length;
-
-
-return`
-
+let qtd = itensManutencao.filter(i=>i.equipamentoId===e.id).length;
+return `
 <tr>
-
-<td>
-<b>${escapar(e.nome)}</b>
-</td>
-
+<td><b>${escapar(e.nome)}</b></td>
 <td>${escapar(e.area)}</td>
-
 <td>${escapar(e.local)}</td>
-
 <td>${escapar(e.patrimonio||"-")}</td>
-
 <td>${escapar(e.fabricante||"-")}</td>
-
 <td>${escapar(e.modelo||"-")}</td>
-
 <td>${escapar(e.status)}</td>
-
 <td>${qtd}</td>
-
-<td>
-
-<button
-class="btn btn-light"
-onclick="editarEquipamento('${e.id}')">
-Editar
-</button>
-
-</td>
-
+<td><button class="btn btn-light" onclick="editarEquipamento('${e.id}')">Editar</button></td>
 </tr>
-
 `;
-
 }).join("")}
-
 </tbody>
-
 </table>
-
 `;
-
 }
 
-
-/* =========================================================
-   ITENS DE MANUTENÇÃO
-========================================================= */
-
+// ITENS DE MANUTENÇÃO
 function renderItens(){
+let busca = (document.getElementById("buscaItem")?.value || "").toLowerCase();
+let area = document.getElementById("filtroItemArea")?.value || "";
+let equip = document.getElementById("filtroItemEquipamento")?.value || "";
+let status = document.getElementById("filtroItemStatus")?.value || "";
 
-let busca=
-(
-document.getElementById(
-"buscaItem"
-)?.value||""
-).toLowerCase();
-
-let area=
-document.getElementById(
-"filtroItemArea"
-)?.value||"";
-
-let equip=
-document.getElementById(
-"filtroItemEquipamento"
-)?.value||"";
-
-let status=
-document.getElementById(
-"filtroItemStatus"
-)?.value||"";
-
-
-let lista=
-itensManutencao.filter(i=>{
-
-let equipamento=
-equipamentos.find(
-e=>e.id===i.equipamentoId
-);
-
-
-let texto=[
-i.nome,
-i.area,
-i.local,
-i.tipo,
-equipamento?.nome||""
-].join(" ").toLowerCase();
-
-
-return(
-!busca||
-texto.includes(busca)
-)
-&&(!area||i.area===area)
-&&(!equip||equipamento?.nome===equip)
-&&(!status||i.status===status);
-
+let lista = itensManutencao.filter(i=>{
+let equipamento = equipamentos.find(e=>e.id===i.equipamentoId);
+let texto = [i.nome, i.area, i.local, i.tipo, equipamento?.nome||""].join(" ").toLowerCase();
+return (!busca || texto.includes(busca)) && (!area || i.area===area) && (!equip || equipamento?.nome===equip) && (!status || i.status===status);
 });
 
+let div = document.getElementById("tabelaItens");
+if(!lista.length){ div.innerHTML = "<div class='empty'>Nenhum item de manutenção cadastrado.</div>"; return; }
 
-let div=
-document.getElementById(
-"tabelaItens"
-);
-
-
-if(!lista.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhum item de manutenção cadastrado.</div>";
-
-return;
-
-}
-
-
-div.innerHTML=`
-
+div.innerHTML = `
 <table>
-
 <thead>
-
 <tr>
-
 <th>Item de manutenção</th>
 <th>Área</th>
 <th>Local</th>
@@ -3740,1287 +1943,360 @@ div.innerHTML=`
 <th>Prioridade</th>
 <th>Status</th>
 <th>Ação</th>
-
 </tr>
-
 </thead>
-
 <tbody>
-
 ${lista.map(i=>{
-
-let eq=
-equipamentos.find(
-e=>e.id===i.equipamentoId
-);
-
-
-return`
-
+let eq = equipamentos.find(e=>e.id===i.equipamentoId);
+return `
 <tr>
-
-<td>
-<b>${escapar(i.nome)}</b>
-<br>
-<span class="small">
-${escapar(i.procedimento||"")}
-</span>
-</td>
-
+<td><b>${escapar(i.nome)}</b><br><span class="small">${escapar(i.procedimento||"")}</span></td>
 <td>${escapar(i.area)}</td>
-
 <td>${escapar(i.local)}</td>
-
 <td>${escapar(eq?.nome||"-")}</td>
-
 <td>${escapar(i.tipo)}</td>
-
 <td>${escapar(i.periodicidade)}</td>
-
-<td>
-
-<span class="badge ${
-i.prioridade==="Alta"
-?"badge-alta":
-i.prioridade==="Baixa"
-?"badge-baixa":
-"badge-media"
-}">
-
-${escapar(i.prioridade)}
-
-</span>
-
-</td>
-
+<td><span class="badge ${i.prioridade==="Alta"?"badge-alta":i.prioridade==="Baixa"?"badge-baixa":"badge-media"}">${escapar(i.prioridade)}</span></td>
 <td>${escapar(i.status)}</td>
-
-<td>
-
-<button
-class="btn btn-light"
-onclick="editarItem('${i.id}')">
-Editar
-</button>
-
-</td>
-
+<td><button class="btn btn-light" onclick="editarItem('${i.id}')">Editar</button></td>
 </tr>
-
 `;
-
 }).join("")}
-
 </tbody>
-
 </table>
-
 `;
-
 }
 
-
-/* =========================================================
-   ÁREAS
-========================================================= */
-
+// ÁREAS
 function renderAreas(){
-
-let grid=
-document.getElementById("areaGrid");
-
-
-grid.innerHTML=
-AREAS.map(a=>{
-
-let qtd=
-itensManutencao.filter(
-i=>i.area===a.nome
-).length;
-
-
-let abertas=
-ordens.filter(
-o=>o.area===a.nome &&
-o.status!=="Concluída"
-).length;
-
-
-return`
-
+let grid = document.getElementById("areaGrid");
+grid.innerHTML = AREAS.map(a=>{
+let qtd = itensManutencao.filter(i=>i.area===a.nome).length;
+let abertas = ordens.filter(o=>o.area===a.nome && o.status!=="Concluída").length;
+return `
 <div class="area-card">
-
-<span class="area-count">
-${qtd} itens
-</span>
-
-<h3>
-${escapar(a.nome)}
-</h3>
-
-<p>
-${a.itens.map(escapar).join(" • ")}
-</p>
-
-<div class="meta">
-${abertas} OS abertas
-</div>
-
+<span class="area-count">${qtd} itens</span>
+<h3>${escapar(a.nome)}</h3>
+<p>${a.itens.map(escapar).join(" • ")}</p>
+<div class="meta">${abertas} OS abertas</div>
 <div style="margin-top:10px">
-
-<button
-class="btn btn-light"
-onclick="abrirAreaOrdens('${escapar(a.nome)}')">
-Ver OS
-</button>
-
-<button
-class="btn btn-primary"
-onclick="novoItemManutencao('${escapar(a.nome)}')">
-＋ Item
-</button>
-
+<button class="btn btn-light" onclick="abrirAreaOrdens('${escapar(a.nome)}')">Ver OS</button>
+<button class="btn btn-primary" onclick="novoItemManutencao('${escapar(a.nome)}')">＋ Item</button>
 </div>
-
 </div>
-
 `;
-
 }).join("");
-
 }
-
 
 function abrirAreaOrdens(area){
-
 mostrarPagina("ordens");
-
-document.getElementById(
-"filtroArea"
-).value=area;
-
+document.getElementById("filtroArea").value = area;
 renderOrdens();
-
 }
 
-
-/* =========================================================
-   CADASTROS
-========================================================= */
-
+// CADASTROS AUXILIARES
 function renderCadastros(){
-
-renderListaSimples(
-"listaLocais",
-locais,
-removerLocal
-);
-
-renderListaSimples(
-"listaTipos",
-tipos,
-removerTipo
-);
-
-renderListaSimples(
-"listaResponsaveis",
-responsaveis,
-removerResponsavel
-);
-
-renderListaSimples(
-"listaFornecedores",
-fornecedores,
-removerFornecedor
-);
-
+renderListaSimples("listaLocais", locais, removerLocal);
+renderListaSimples("listaTipos", tipos, removerTipo);
+renderListaSimples("listaResponsaveis", responsaveis, removerResponsavel);
+renderListaSimples("listaFornecedores", fornecedores, removerFornecedor);
 }
 
-
-function renderListaSimples(
-id,
-lista,
-funcao
-){
-
-let div=document.getElementById(id);
-
-if(!lista.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhum cadastro.</div>";
-
-return;
-
-}
-
-
-div.innerHTML=
-lista.map((x,i)=>`
-
+function renderListaSimples(id, lista, funcao){
+let div = document.getElementById(id);
+if(!lista.length){ div.innerHTML = "<div class='empty'>Nenhum cadastro.</div>"; return; }
+div.innerHTML = lista.map((x,i)=>`
 <div class="catalog-item">
-
-<div class="catalog-item-title">
-${escapar(x)}
-</div>
-
+<div class="catalog-item-title">${escapar(x)}</div>
 <div class="catalog-actions">
-
-<button
-class="btn btn-danger"
-onclick="${funcao.name}(${i})">
-Excluir
-</button>
-
+<button class="btn btn-danger" onclick="${funcao.name}(${i})">Excluir</button>
 </div>
-
 </div>
-
 `).join("");
-
 }
-
 
 function adicionarLocal(){
-
-let input=
-document.getElementById("novoLocal");
-
-let nome=input.value.trim();
-
-if(!nome)return;
-
-if(!locais.includes(nome))
-locais.push(nome);
-
-input.value="";
-
+let input = document.getElementById("novoLocal");
+let nome = input.value.trim();
+if(!nome) return;
+if(!locais.includes(nome)) locais.push(nome);
+input.value = "";
 salvarTudo();
-
 renderTudo();
-
 }
-
-
-function removerLocal(i){
-
-if(!confirm("Excluir este local?"))
-return;
-
-locais.splice(i,1);
-
-salvarTudo();
-
-renderTudo();
-
-}
-
+function removerLocal(i){ if(!confirm("Excluir este local?")) return; locais.splice(i,1); salvarTudo(); renderTudo(); }
 
 function adicionarTipo(){
-
-let input=
-document.getElementById("novoTipo");
-
-let nome=input.value.trim();
-
-if(!nome)return;
-
-if(!tipos.includes(nome))
-tipos.push(nome);
-
-input.value="";
-
+let input = document.getElementById("novoTipo");
+let nome = input.value.trim();
+if(!nome) return;
+if(!tipos.includes(nome)) tipos.push(nome);
+input.value = "";
 salvarTudo();
-
 renderTudo();
-
 }
-
-
-function removerTipo(i){
-
-if(!confirm("Excluir este tipo?"))
-return;
-
-tipos.splice(i,1);
-
-salvarTudo();
-
-renderTudo();
-
-}
-
+function removerTipo(i){ if(!confirm("Excluir este tipo?")) return; tipos.splice(i,1); salvarTudo(); renderTudo(); }
 
 function adicionarResponsavel(){
-
-let input=
-document.getElementById("novoResponsavel");
-
-let nome=input.value.trim();
-
-if(!nome)return;
-
-if(!responsaveis.includes(nome))
-responsaveis.push(nome);
-
-input.value="";
-
+let input = document.getElementById("novoResponsavel");
+let nome = input.value.trim();
+if(!nome) return;
+if(!responsaveis.includes(nome)) responsaveis.push(nome);
+input.value = "";
 salvarTudo();
-
 renderTudo();
-
 }
-
-
-function removerResponsavel(i){
-
-if(!confirm("Excluir este responsável?"))
-return;
-
-responsaveis.splice(i,1);
-
-salvarTudo();
-
-renderTudo();
-
-}
-
+function removerResponsavel(i){ if(!confirm("Excluir este responsável?")) return; responsaveis.splice(i,1); salvarTudo(); renderTudo(); }
 
 function adicionarFornecedor(){
-
-let input=
-document.getElementById("novoFornecedor");
-
-let nome=input.value.trim();
-
-if(!nome)return;
-
-if(!fornecedores.includes(nome))
-fornecedores.push(nome);
-
-input.value="";
-
+let input = document.getElementById("novoFornecedor");
+let nome = input.value.trim();
+if(!nome) return;
+if(!fornecedores.includes(nome)) fornecedores.push(nome);
+input.value = "";
 salvarTudo();
-
 renderTudo();
-
 }
+function removerFornecedor(i){ if(!confirm("Excluir este fornecedor?")) return; fornecedores.splice(i,1); salvarTudo(); renderTudo(); }
 
-
-function removerFornecedor(i){
-
-if(!confirm("Excluir este fornecedor?"))
-return;
-
-fornecedores.splice(i,1);
-
-salvarTudo();
-
-renderTudo();
-
+// EQUIPAMENTO MODAL
+function preencherAreasSelect(id, valor=""){
+let s = document.getElementById(id);
+s.innerHTML = AREAS.map(a=>`<option value="${escapar(a.nome)}">${escapar(a.nome)}</option>`).join("");
+if(valor) s.value = valor;
 }
-
-
-/* =========================================================
-   NOVO EQUIPAMENTO
-========================================================= */
-
-function preencherAreasSelect(id,valor=""){
-
-let s=document.getElementById(id);
-
-s.innerHTML=
-AREAS.map(a=>
-`<option value="${escapar(a.nome)}">
-${escapar(a.nome)}
-</option>`
-).join("");
-
-if(valor)
-s.value=valor;
-
+function preencherLocaisSelect(id, valor=""){
+let s = document.getElementById(id);
+s.innerHTML = locais.map(l=>`<option value="${escapar(l)}">${escapar(l)}</option>`).join("");
+if(valor) s.value = valor;
 }
-
-
-function preencherLocaisSelect(id,valor=""){
-
-let s=document.getElementById(id);
-
-s.innerHTML=
-locais.map(l=>
-`<option value="${escapar(l)}">
-${escapar(l)}
-</option>`
-).join("");
-
-if(valor)
-s.value=valor;
-
-}
-
 
 function novoEquipamento(){
-
-document.getElementById(
-"tituloModalEquipamento"
-).textContent=
-"Novo Equipamento";
-
-
-document.getElementById(
-"equipamentoId"
-).value="";
-
-
+document.getElementById("tituloModalEquipamento").textContent = "Novo Equipamento";
+document.getElementById("equipamentoId").value = "";
 preencherAreasSelect("equipArea");
-
 preencherLocaisSelect("equipLocal");
-
-document.getElementById("equipNome").value="";
-
-document.getElementById("equipPatrimonio").value="";
-
-document.getElementById("equipFabricante").value="";
-
-document.getElementById("equipModelo").value="";
-
-document.getElementById("equipSerie").value="";
-
-document.getElementById("equipStatus").value="Ativo";
-
-document.getElementById("equipObservacoes").value="";
-
-
-document.getElementById(
-"btnExcluirEquipamento"
-).style.display="none";
-
-
-document.getElementById(
-"modalEquipamento"
-).classList.add("show");
-
+document.getElementById("equipNome").value = "";
+document.getElementById("equipPatrimonio").value = "";
+document.getElementById("equipFabricante").value = "";
+document.getElementById("equipModelo").value = "";
+document.getElementById("equipSerie").value = "";
+document.getElementById("equipStatus").value = "Ativo";
+document.getElementById("equipObservacoes").value = "";
+document.getElementById("btnExcluirEquipamento").style.display = "none";
+document.getElementById("modalEquipamento").classList.add("show");
 }
-
 
 function editarEquipamento(id){
-
-let e=
-equipamentos.find(
-x=>x.id===id
-);
-
-if(!e)return;
-
-
-document.getElementById(
-"tituloModalEquipamento"
-).textContent=
-"Editar Equipamento";
-
-
-document.getElementById(
-"equipamentoId"
-).value=e.id;
-
-
-preencherAreasSelect(
-"equipArea",
-e.area
-);
-
-preencherLocaisSelect(
-"equipLocal",
-e.local
-);
-
-
-document.getElementById(
-"equipNome"
-).value=e.nome||"";
-
-document.getElementById(
-"equipPatrimonio"
-).value=e.patrimonio||"";
-
-document.getElementById(
-"equipFabricante"
-).value=e.fabricante||"";
-
-document.getElementById(
-"equipModelo"
-).value=e.modelo||"";
-
-document.getElementById(
-"equipSerie"
-).value=e.serie||"";
-
-document.getElementById(
-"equipStatus"
-).value=e.status||"Ativo";
-
-document.getElementById(
-"equipObservacoes"
-).value=e.observacoes||"";
-
-
-document.getElementById(
-"btnExcluirEquipamento"
-).style.display="block";
-
-
-document.getElementById(
-"modalEquipamento"
-).classList.add("show");
-
+let e = equipamentos.find(x=>x.id===id);
+if(!e) return;
+document.getElementById("tituloModalEquipamento").textContent = "Editar Equipamento";
+document.getElementById("equipamentoId").value = e.id;
+preencherAreasSelect("equipArea", e.area);
+preencherLocaisSelect("equipLocal", e.local);
+document.getElementById("equipNome").value = e.nome || "";
+document.getElementById("equipPatrimonio").value = e.patrimonio || "";
+document.getElementById("equipFabricante").value = e.fabricante || "";
+document.getElementById("equipModelo").value = e.modelo || "";
+document.getElementById("equipSerie").value = e.serie || "";
+document.getElementById("equipStatus").value = e.status || "Ativo";
+document.getElementById("equipObservacoes").value = e.observacoes || "";
+document.getElementById("btnExcluirEquipamento").style.display = "block";
+document.getElementById("modalEquipamento").classList.add("show");
 }
 
-
-function fecharModalEquipamento(){
-
-document.getElementById(
-"modalEquipamento"
-).classList.remove("show");
-
-}
-
+function fecharModalEquipamento(){ document.getElementById("modalEquipamento").classList.remove("show"); }
 
 function salvarEquipamento(){
-
-let nome=
-document.getElementById(
-"equipNome"
-).value.trim();
-
-if(!nome){
-
-alert("Informe o nome do equipamento.");
-
-return;
-
-}
-
-
-let id=
-document.getElementById(
-"equipamentoId"
-).value;
-
-
-let dados={
-
-area:
-document.getElementById("equipArea").value,
-
-local:
-document.getElementById("equipLocal").value,
-
+let nome = document.getElementById("equipNome").value.trim();
+if(!nome){ alert("Informe o nome do equipamento."); return; }
+let id = document.getElementById("equipamentoId").value;
+let dados = {
+area: document.getElementById("equipArea").value,
+local: document.getElementById("equipLocal").value,
 nome,
-
-patrimonio:
-document.getElementById("equipPatrimonio").value.trim(),
-
-fabricante:
-document.getElementById("equipFabricante").value.trim(),
-
-modelo:
-document.getElementById("equipModelo").value.trim(),
-
-serie:
-document.getElementById("equipSerie").value.trim(),
-
-status:
-document.getElementById("equipStatus").value,
-
-observacoes:
-document.getElementById("equipObservacoes").value.trim()
-
+patrimonio: document.getElementById("equipPatrimonio").value.trim(),
+fabricante: document.getElementById("equipFabricante").value.trim(),
+modelo: document.getElementById("equipModelo").value.trim(),
+serie: document.getElementById("equipSerie").value.trim(),
+status: document.getElementById("equipStatus").value,
+observacoes: document.getElementById("equipObservacoes").value.trim()
 };
-
-
 if(id){
-
-let e=
-equipamentos.find(
-x=>x.id===id
-);
-
-Object.assign(e,dados);
-
-}else{
-
-equipamentos.push({
-
-id:gerarID("EQ"),
-
-...dados
-
-});
-
+let e = equipamentos.find(x=>x.id===id);
+Object.assign(e, dados);
+} else {
+equipamentos.push({ id: gerarID("EQ"), ...dados });
 }
-
-
 salvarTudo();
-
 fecharModalEquipamento();
-
 renderTudo();
-
 }
 
-
-/* =========================================================
-   ITEM MANUTENÇÃO
-========================================================= */
-
-function preencherEquipamentosSelect(
-id,
-valor=""
-){
-
-let s=document.getElementById(id);
-
-s.innerHTML=
-"<option value=''>-- Selecione --</option>"+
-equipamentos
-.map(e=>
-`<option value="${e.id}">
-${escapar(e.nome)}
-</option>`
-)
-.join("");
-
-if(valor)
-s.value=valor;
-
+// ITEM MANUTENÇÃO MODAL
+function preencherEquipamentosSelect(id, valor=""){
+let s = document.getElementById(id);
+s.innerHTML = "<option value=''>-- Selecione --</option>" + equipamentos.map(e=>`<option value="${e.id}">${escapar(e.nome)}</option>`).join("");
+if(valor) s.value = valor;
 }
 
-
-function preencherTiposSelect(
-id,
-valor=""
-){
-
-let s=document.getElementById(id);
-
-s.innerHTML=
-tipos
-.map(t=>
-`<option value="${escapar(t)}">
-${escapar(t)}
-</option>`
-)
-.join("");
-
-if(valor)
-s.value=valor;
-
+function preencherTiposSelect(id, valor=""){
+let s = document.getElementById(id);
+s.innerHTML = tipos.map(t=>`<option value="${escapar(t)}">${escapar(t)}</option>`).join("");
+if(valor) s.value = valor;
 }
 
-
-function preencherResponsaveisSelect(
-id,
-valor=""
-){
-
-let s=document.getElementById(id);
-
-s.innerHTML=
-"<option value=''>Não informado</option>"+
-responsaveis
-.map(r=>
-`<option value="${escapar(r)}">
-${escapar(r)}
-</option>`
-)
-.join("");
-
-if(valor)
-s.value=valor;
-
+function preencherResponsaveisSelect(id, valor=""){
+let s = document.getElementById(id);
+s.innerHTML = "<option value=''>Não informado</option>" + responsaveis.map(r=>`<option value="${escapar(r)}">${escapar(r)}</option>`).join("");
+if(valor) s.value = valor;
 }
 
-
-function preencherFornecedoresSelect(
-id,
-valor=""
-){
-
-let s=document.getElementById(id);
-
-s.innerHTML=
-"<option value=''>Não informado</option>"+
-fornecedores
-.map(f=>
-`<option value="${escapar(f)}">
-${escapar(f)}
-</option>`
-)
-.join("");
-
-if(valor)
-s.value=valor;
-
+function preencherFornecedoresSelect(id, valor=""){
+let s = document.getElementById(id);
+s.innerHTML = "<option value=''>Não informado</option>" + fornecedores.map(f=>`<option value="${escapar(f)}">${escapar(f)}</option>`).join("");
+if(valor) s.value = valor;
 }
 
-
-function novoItemManutencao(
-areaInicial=""
-){
-
-document.getElementById(
-"tituloModalItem"
-).textContent=
-"Novo Item de Manutenção";
-
-
-document.getElementById(
-"itemId"
-).value="";
-
-
-preencherAreasSelect(
-"itemArea",
-areaInicial
-);
-
+function novoItemManutencao(areaInicial=""){
+document.getElementById("tituloModalItem").textContent = "Novo Item de Manutenção";
+document.getElementById("itemId").value = "";
+preencherSelectAtividadesCatalogo("itemAtividadeCatalogo");
+preencherAreasSelect("itemArea", areaInicial);
 atualizarLocaisItem();
-
-preencherEquipamentosSelect(
-"itemEquipamento"
-);
-
-preencherTiposSelect(
-"itemTipo"
-);
-
-
-document.getElementById(
-"itemNome"
-).value="";
-
-document.getElementById(
-"itemPeriodicidade"
-).value="Mensal";
-
-document.getElementById(
-"itemPrioridade"
-).value="Média";
-
-document.getElementById(
-"itemStatus"
-).value="Ativo";
-
-document.getElementById(
-"itemProcedimento"
-).value="";
-
-document.getElementById(
-"itemChecklist"
-).value="";
-
-
-document.getElementById(
-"btnExcluirItem"
-).style.display="none";
-
-
-document.getElementById(
-"modalItem"
-).classList.add("show");
-
+preencherEquipamentosSelect("itemEquipamento");
+preencherTiposSelect("itemTipo");
+document.getElementById("itemNome").value = "";
+document.getElementById("itemPeriodicidade").value = "Mensal";
+document.getElementById("itemPrioridade").value = "Média";
+document.getElementById("itemStatus").value = "Ativo";
+document.getElementById("itemProcedimento").value = "";
+document.getElementById("itemChecklist").value = "";
+document.getElementById("btnExcluirItem").style.display = "none";
+document.getElementById("modalItem").classList.add("show");
 }
-
 
 function atualizarLocaisItem(){
-
-let area=
-document.getElementById("itemArea").value;
-
-
-let locaisArea=
-locais;
-
-
-preencherLocaisSelect(
-"itemLocal"
-);
-
+preencherLocaisSelect("itemLocal");
 }
-
 
 function editarItem(id){
-
-let i=
-itensManutencao.find(
-x=>x.id===id
-);
-
-if(!i)return;
-
-
-document.getElementById(
-"tituloModalItem"
-).textContent=
-"Editar Item de Manutenção";
-
-
-document.getElementById(
-"itemId"
-).value=i.id;
-
-
-preencherAreasSelect(
-"itemArea",
-i.area
-);
-
+let i = itensManutencao.find(x=>x.id===id);
+if(!i) return;
+document.getElementById("tituloModalItem").textContent = "Editar Item de Manutenção";
+document.getElementById("itemId").value = i.id;
+preencherSelectAtividadesCatalogo("itemAtividadeCatalogo");
+preencherAreasSelect("itemArea", i.area);
 atualizarLocaisItem();
-
-document.getElementById(
-"itemLocal"
-).value=i.local;
-
-
-preencherEquipamentosSelect(
-"itemEquipamento",
-i.equipamentoId
-);
-
-preencherTiposSelect(
-"itemTipo",
-i.tipo
-);
-
-
-document.getElementById(
-"itemNome"
-).value=i.nome||"";
-
-document.getElementById(
-"itemPeriodicidade"
-).value=i.periodicidade||"Mensal";
-
-document.getElementById(
-"itemPrioridade"
-).value=i.prioridade||"Média";
-
-document.getElementById(
-"itemStatus"
-).value=i.status||"Ativo";
-
-document.getElementById(
-"itemProcedimento"
-).value=i.procedimento||"";
-
-document.getElementById(
-"itemChecklist"
-).value=i.checklist||"";
-
-
-document.getElementById(
-"btnExcluirItem"
-).style.display="block";
-
-
-document.getElementById(
-"modalItem"
-).classList.add("show");
-
+document.getElementById("itemLocal").value = i.local;
+preencherEquipamentosSelect("itemEquipamento", i.equipamentoId);
+preencherTiposSelect("itemTipo", i.tipo);
+document.getElementById("itemNome").value = i.nome || "";
+document.getElementById("itemPeriodicidade").value = i.periodicidade || "Mensal";
+document.getElementById("itemPrioridade").value = i.prioridade || "Média";
+document.getElementById("itemStatus").value = i.status || "Ativo";
+document.getElementById("itemProcedimento").value = i.procedimento || "";
+document.getElementById("itemChecklist").value = i.checklist || "";
+document.getElementById("btnExcluirItem").style.display = "block";
+document.getElementById("modalItem").classList.add("show");
 }
 
-
-function fecharModalItem(){
-
-document.getElementById(
-"modalItem"
-).classList.remove("show");
-
-}
-
+function fecharModalItem(){ document.getElementById("modalItem").classList.remove("show"); }
 
 function salvarItem(){
-
-let nome=
-document.getElementById(
-"itemNome"
-).value.trim();
-
-let equipamentoId=
-document.getElementById(
-"itemEquipamento"
-).value;
-
-
-if(!nome){
-
-alert(
-"Informe o item de manutenção."
-);
-
-return;
-
-}
-
-
-if(!equipamentoId){
-
-alert(
-"Selecione um equipamento."
-);
-
-return;
-
-}
-
-
-let equipamento=
-equipamentos.find(
-e=>e.id===equipamentoId
-);
-
-
-let id=
-document.getElementById(
-"itemId"
-).value;
-
-
-let dados={
-
-area:
-document.getElementById("itemArea").value,
-
-local:
-document.getElementById("itemLocal").value,
-
+let nome = document.getElementById("itemNome").value.trim();
+let equipamentoId = document.getElementById("itemEquipamento").value;
+if(!nome){ alert("Informe o item de manutenção."); return; }
+if(!equipamentoId){ alert("Selecione um equipamento."); return; }
+let id = document.getElementById("itemId").value;
+let dados = {
+area: document.getElementById("itemArea").value,
+local: document.getElementById("itemLocal").value,
 equipamentoId,
-
 nome,
-
-tipo:
-document.getElementById("itemTipo").value,
-
-periodicidade:
-document.getElementById("itemPeriodicidade").value,
-
-prioridade:
-document.getElementById("itemPrioridade").value,
-
-status:
-document.getElementById("itemStatus").value,
-
-procedimento:
-document.getElementById("itemProcedimento").value.trim(),
-
-checklist:
-document.getElementById("itemChecklist").value.trim()
-
+tipo: document.getElementById("itemTipo").value,
+periodicidade: document.getElementById("itemPeriodicidade").value,
+prioridade: document.getElementById("itemPrioridade").value,
+status: document.getElementById("itemStatus").value,
+procedimento: document.getElementById("itemProcedimento").value.trim(),
+checklist: document.getElementById("itemChecklist").value.trim()
 };
-
-
 if(id){
-
-let item=
-itensManutencao.find(
-x=>x.id===id
-);
-
-Object.assign(item,dados);
-
-}else{
-
-itensManutencao.push({
-
-id:gerarID("IT"),
-
-...dados
-
-});
-
+let item = itensManutencao.find(x=>x.id===id);
+Object.assign(item, dados);
+} else {
+itensManutencao.push({ id: gerarID("IT"), ...dados });
 }
-
-
 salvarTudo();
-
 fecharModalItem();
-
 renderTudo();
-
 }
-
-
-/* =========================================================
-   EXCLUIR ITEM
-========================================================= */
 
 function excluirItem(){
-
-let id=
-document.getElementById("itemId").value;
-
-
-if(!confirm(
-"Excluir este item de manutenção?"
-))
-return;
-
-
-itensManutencao=
-itensManutencao.filter(
-i=>i.id!==id
-);
-
-
-programacoes=
-programacoes.filter(
-p=>p.itemId!==id
-);
-
-
+let id = document.getElementById("itemId").value;
+if(!confirm("Excluir este item de manutenção?")) return;
+itensManutencao = itensManutencao.filter(i=>i.id!==id);
+programacoes = programacoes.filter(p=>p.itemId!==id);
 salvarTudo();
-
 fecharModalItem();
-
 renderTudo();
-
 }
 
-
-/* =========================================================
-   PROGRAMAÇÃO
-========================================================= */
-
+// PROGRAMAÇÃO
 function novaProgramacao(){
-
-if(!itensManutencao.length){
-
-alert(
-"Cadastre primeiro um Item de Manutenção."
-);
-
-mostrarPagina("itens");
-
-return;
-
-}
-
-
-let select=
-document.getElementById("progItem");
-
-
-select.innerHTML=
-itensManutencao
-.filter(i=>i.status==="Ativo")
-.map(i=>
-`<option value="${i.id}">
-${escapar(i.nome)}
-</option>`
-)
-.join("");
-
-
-preencherResponsaveisSelect(
-"progResponsavel"
-);
-
-
-document.getElementById(
-"progUltima"
-).value=hoje();
-
-
+if(!itensManutencao.length){ alert("Cadastre primeiro um Item de Manutenção."); mostrarPagina("itens"); return; }
+let select = document.getElementById("progItem");
+select.innerHTML = itensManutencao.filter(i=>i.status==="Ativo").map(i=>`<option value="${i.id}">${escapar(i.nome)}</option>`).join("");
+preencherResponsaveisSelect("progResponsavel");
+document.getElementById("progUltima").value = hoje();
 carregarDadosProgramacao();
-
-
-document.getElementById(
-"modalProgramacao"
-).classList.add("show");
-
+document.getElementById("modalProgramacao").classList.add("show");
 }
-
 
 function carregarDadosProgramacao(){
-
-let id=
-document.getElementById(
-"progItem"
-).value;
-
-
-let item=
-itensManutencao.find(
-i=>i.id===id
-);
-
-
-if(!item)
-return;
-
-
-document.getElementById(
-"progPeriodicidade"
-).value=
-item.periodicidade;
-
-
-let ultima=
-document.getElementById(
-"progUltima"
-).value;
-
-
+let id = document.getElementById("progItem").value;
+let item = itensManutencao.find(i=>i.id===id);
+if(!item) return;
+document.getElementById("progPeriodicidade").value = item.periodicidade;
+let ultima = document.getElementById("progUltima").value;
 if(ultima){
-
-document.getElementById(
-"progProxima"
-).value=
-adicionarPeriodo(
-ultima,
-item.periodicidade
-);
-
+document.getElementById("progProxima").value = adicionarPeriodo(ultima, item.periodicidade);
+}
 }
 
-}
-
-
-document.getElementById(
-"progUltima"
-).addEventListener(
-"change",
-carregarDadosProgramacao
-);
-
-
-document.getElementById(
-"progPeriodicidade"
-).addEventListener(
-"change",
-function(){
-
-let ultima=
-document.getElementById(
-"progUltima"
-).value;
-
-if(ultima){
-
-document.getElementById(
-"progProxima"
-).value=
-adicionarPeriodo(
-ultima,
-this.value
-);
-
-}
-
+document.getElementById("progUltima").addEventListener("change", carregarDadosProgramacao);
+document.getElementById("progPeriodicidade").addEventListener("change", function(){
+let ultima = document.getElementById("progUltima").value;
+if(ultima){ document.getElementById("progProxima").value = adicionarPeriodo(ultima, this.value); }
 });
 
-
-function fecharModalProgramacao(){
-
-document.getElementById(
-"modalProgramacao"
-).classList.remove("show");
-
-}
-
+function fecharModalProgramacao(){ document.getElementById("modalProgramacao").classList.remove("show"); }
 
 function salvarProgramacao(){
-
-let itemId=
-document.getElementById(
-"progItem"
-).value;
-
-
-if(!itemId){
-
-alert("Selecione um item.");
-
-return;
-
-}
-
-
-let registro={
-
-id:gerarID("PG"),
-
+let itemId = document.getElementById("progItem").value;
+if(!itemId){ alert("Selecione um item."); return; }
+let registro = {
+id: gerarID("PG"),
 itemId,
-
-periodicidade:
-document.getElementById(
-"progPeriodicidade"
-).value,
-
-ultima:
-document.getElementById(
-"progUltima"
-).value,
-
-proxima:
-document.getElementById(
-"progProxima"
-).value,
-
-responsavel:
-document.getElementById(
-"progResponsavel"
-).value,
-
-auto:
-document.getElementById(
-"progAuto"
-).checked
-
+periodicidade: document.getElementById("progPeriodicidade").value,
+ultima: document.getElementById("progUltima").value,
+proxima: document.getElementById("progProxima").value,
+responsavel: document.getElementById("progResponsavel").value,
+auto: document.getElementById("progAuto").checked
 };
-
-
 programacoes.push(registro);
-
 salvarTudo();
-
 fecharModalProgramacao();
-
 renderTudo();
-
 }
-
-
-/* =========================================================
-   TABELA PROGRAMAÇÃO
-========================================================= */
 
 function renderProgramacao(){
-
-let div=
-document.getElementById(
-"tabelaProgramacao"
-);
-
-
-if(!programacoes.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhuma programação cadastrada.</div>";
-
-return;
-
-}
-
-
-div.innerHTML=`
-
+let div = document.getElementById("tabelaProgramacao");
+if(!programacoes.length){ div.innerHTML = "<div class='empty'>Nenhuma programação cadastrada.</div>"; return; }
+div.innerHTML = `
 <table>
-
 <thead>
-
 <tr>
-
 <th>Item</th>
 <th>Equipamento</th>
 <th>Área</th>
@@ -5030,1598 +2306,377 @@ div.innerHTML=`
 <th>Status</th>
 <th>Responsável</th>
 <th>Ação</th>
-
 </tr>
-
 </thead>
-
 <tbody>
-
 ${programacoes.map(p=>{
-
-let item=
-itensManutencao.find(
-i=>i.id===p.itemId
-);
-
-
-let eq=
-equipamentos.find(
-e=>e.id===item?.equipamentoId
-);
-
-
-let status=
-calcularStatusProgramacao(p);
-
-
-return`
-
+let item = itensManutencao.find(i=>i.id===p.itemId);
+let eq = equipamentos.find(e=>e.id===item?.equipamentoId);
+let status = calcularStatusProgramacao(p);
+return `
 <tr>
-
+<td><b>${escapar(item?.nome||"Item excluído")}</b></td>
+<td>${escapar(eq?.nome||"-")}</td>
+<td>${escapar(item?.area||"-")}</td>
+<td>${escapar(p.periodicidade)}</td>
+<td>${formatarData(p.ultima)}</td>
+<td><b>${formatarData(p.proxima)}</b></td>
+<td><span class="badge ${status==="Vencida"?"badge-atrasada":status==="Próxima"?"badge-andamento":"badge-concluida"}">${status}</span></td>
+<td>${escapar(p.responsavel||"-")}</td>
 <td>
-<b>${escapar(item?.nome||"Item excluído")}</b>
+<button class="btn btn-success" onclick="gerarOSDaProgramacao('${p.id}')">Gerar OS</button>
+<button class="btn btn-danger" onclick="excluirProgramacao('${p.id}')">Excluir</button>
 </td>
-
-<td>
-${escapar(eq?.nome||"-")}
-</td>
-
-<td>
-${escapar(item?.area||"-")}
-</td>
-
-<td>
-${escapar(p.periodicidade)}
-</td>
-
-<td>
-${formatarData(p.ultima)}
-</td>
-
-<td>
-<b>${formatarData(p.proxima)}</b>
-</td>
-
-<td>
-
-<span class="badge ${
-status==="Vencida"
-?"badge-atrasada":
-status==="Próxima"
-?"badge-andamento":
-"badge-concluida"
-}">
-
-${status}
-
-</span>
-
-</td>
-
-<td>
-${escapar(p.responsavel||"-")}
-</td>
-
-<td>
-
-<button
-class="btn btn-success"
-onclick="gerarOSDaProgramacao('${p.id}')">
-Gerar OS
-</button>
-
-<button
-class="btn btn-danger"
-onclick="excluirProgramacao('${p.id}')">
-Excluir
-</button>
-
-</td>
-
 </tr>
-
 `;
-
 }).join("")}
-
 </tbody>
-
 </table>
-
 `;
-
 }
-
 
 function excluirProgramacao(id){
-
-if(!confirm(
-"Excluir esta programação?"
-))
-return;
-
-
-programacoes=
-programacoes.filter(
-p=>p.id!==id
-);
-
-
+if(!confirm("Excluir esta programação?")) return;
+programacoes = programacoes.filter(p=>p.id!==id);
 salvarTudo();
-
 renderTudo();
-
 }
-
-
-/* =========================================================
-   GERAR OS A PARTIR DA PROGRAMAÇÃO
-========================================================= */
 
 function gerarOSDaProgramacao(id){
-
-let p=
-programacoes.find(
-x=>x.id===id
-);
-
-
-if(!p)return;
-
-
-let item=
-itensManutencao.find(
-i=>i.id===p.itemId
-);
-
-
-if(!item)return;
-
-
-abrirOSComItem(
-item.id,
-p.proxima
-);
-
+let p = programacoes.find(x=>x.id===id);
+if(!p) return;
+let item = itensManutencao.find(i=>i.id===p.itemId);
+if(!item) return;
+abrirOSComItem(item.id, p.proxima);
 }
 
-
-/* =========================================================
-   MODAL OS
-========================================================= */
-
+// OS MODAL
 function prepararModalOS(){
-
-let select=
-document.getElementById(
-"ordemItem"
-);
-
-
-select.innerHTML=
-"<option value=''>-- OS avulsa --</option>"+
-itensManutencao
-.filter(i=>i.status==="Ativo")
-.map(i=>
-`<option value="${i.id}">
-${escapar(i.nome)}
-</option>`
-)
-.join("");
-
-
-preencherAreasSelect(
-"ordemArea"
-);
-
-preencherLocaisSelect(
-"ordemLocal"
-);
-
-preencherEquipamentosSelect(
-"ordemEquipamento"
-);
-
-preencherTiposSelect(
-"ordemTipo"
-);
-
-preencherResponsaveisSelect(
-"ordemResponsavel"
-);
-
-preencherFornecedoresSelect(
-"ordemFornecedor"
-);
-
+let select = document.getElementById("ordemItem");
+select.innerHTML = "<option value=''>-- OS avulsa --</option>" + itensManutencao.filter(i=>i.status==="Ativo").map(i=>`<option value="${i.id}">${escapar(i.nome)}</option>`).join("");
+preencherAreasSelect("ordemArea");
+preencherLocaisSelect("ordemLocal");
+preencherEquipamentosSelect("ordemEquipamento");
+preencherTiposSelect("ordemTipo");
+preencherResponsaveisSelect("ordemResponsavel");
+preencherFornecedoresSelect("ordemFornecedor");
 }
 
+function novaOrdem(){ abrirOSComItem("", hoje()); }
 
-function novaOrdem(){
-
-abrirOSComItem("",hoje());
-
-}
-
-
-function abrirOSComItem(
-itemId="",
-data=hoje()
-){
-
+function abrirOSComItem(itemId="", data=hoje()){
 prepararModalOS();
-
-
-document.getElementById(
-"modalTitulo"
-).textContent=
-"Nova Ordem de Serviço";
-
-
-document.getElementById(
-"ordemId"
-).value="";
-
-
-document.getElementById(
-"ordemItem"
-).value=itemId||"";
-
-
-document.getElementById(
-"ordemTitulo"
-).value="";
-
-
-document.getElementById(
-"ordemPrioridade"
-).value="Média";
-
-
-document.getElementById(
-"ordemStatus"
-).value="Aberta";
-
-
-document.getElementById(
-"ordemData"
-).value=data;
-
-
-document.getElementById(
-"ordemHorario"
-).value="";
-
-
-document.getElementById(
-"ordemChecklist"
-).value="";
-
-
-document.getElementById(
-"ordemProcedimento"
-).value="";
-
-
-document.getElementById(
-"ordemObservacoes"
-).value="";
-
-
-fotosTemporarias=[];
-
+document.getElementById("modalTitulo").textContent = "Nova Ordem de Serviço";
+document.getElementById("ordemId").value = "";
+document.getElementById("ordemItem").value = itemId || "";
+document.getElementById("ordemTitulo").value = "";
+document.getElementById("ordemPrioridade").value = "Média";
+document.getElementById("ordemStatus").value = "Aberta";
+document.getElementById("ordemData").value = data;
+document.getElementById("ordemHorario").value = "";
+document.getElementById("ordemChecklist").value = "";
+document.getElementById("ordemProcedimento").value = "";
+document.getElementById("ordemObservacoes").value = "";
+fotosTemporarias = [];
 renderFotosOS();
-
-
-document.getElementById(
-"btnExcluirOS"
-).style.display="none";
-
-
-if(itemId)
-preencherOSComItem();
-
-
-document.getElementById(
-"modalOrdem"
-).classList.add("show");
-
+document.getElementById("btnExcluirOS").style.display = "none";
+if(itemId) preencherOSComItem();
+document.getElementById("modalOrdem").classList.add("show");
 }
-
 
 function preencherOSComItem(){
-
-let id=
-document.getElementById(
-"ordemItem"
-).value;
-
-
-if(!id)
-return;
-
-
-let item=
-itensManutencao.find(
-i=>i.id===id
-);
-
-
-if(!item)
-return;
-
-
-let eq=
-equipamentos.find(
-e=>e.id===item.equipamentoId
-);
-
-
-document.getElementById(
-"ordemTitulo"
-).value=
-item.nome;
-
-
-document.getElementById(
-"ordemArea"
-).value=
-item.area;
-
-
-document.getElementById(
-"ordemLocal"
-).value=
-item.local;
-
-
-document.getElementById(
-"ordemEquipamento"
-).value=
-item.equipamentoId;
-
-
-document.getElementById(
-"ordemTipo"
-).value=
-item.tipo;
-
-
-document.getElementById(
-"ordemPrioridade"
-).value=
-item.prioridade;
-
-
-document.getElementById(
-"ordemChecklist"
-).value=
-item.checklist||"";
-
-
-document.getElementById(
-"ordemProcedimento"
-).value=
-item.procedimento||"";
-
+let id = document.getElementById("ordemItem").value;
+if(!id) return;
+let item = itensManutencao.find(i=>i.id===id);
+if(!item) return;
+document.getElementById("ordemTitulo").value = item.nome;
+document.getElementById("ordemArea").value = item.area;
+document.getElementById("ordemLocal").value = item.local;
+document.getElementById("ordemEquipamento").value = item.equipamentoId;
+document.getElementById("ordemTipo").value = item.tipo;
+document.getElementById("ordemPrioridade").value = item.prioridade;
+document.getElementById("ordemChecklist").value = item.checklist || "";
+document.getElementById("ordemProcedimento").value = item.procedimento || "";
 }
-
 
 function editarOS(id){
-
-let o=
-ordens.find(
-x=>x.id===id
-);
-
-
-if(!o)return;
-
-
+let o = ordens.find(x=>x.id===id);
+if(!o) return;
 prepararModalOS();
-
-
-document.getElementById(
-"modalTitulo"
-).textContent=
-"Editar Ordem de Serviço";
-
-
-document.getElementById(
-"ordemId"
-).value=o.id;
-
-
-document.getElementById(
-"ordemItem"
-).value=o.itemId||"";
-
-
-document.getElementById(
-"ordemTitulo"
-).value=o.titulo||"";
-
-
-document.getElementById(
-"ordemArea"
-).value=o.area||"";
-
-
-document.getElementById(
-"ordemLocal"
-).value=o.local||"";
-
-
-document.getElementById(
-"ordemEquipamento"
-).value=o.equipamentoId||"";
-
-
-document.getElementById(
-"ordemTipo"
-).value=o.tipo||"";
-
-
-document.getElementById(
-"ordemPrioridade"
-).value=o.prioridade||"Média";
-
-
-document.getElementById(
-"ordemStatus"
-).value=o.status||"Aberta";
-
-
-document.getElementById(
-"ordemData"
-).value=o.data||hoje();
-
-
-document.getElementById(
-"ordemHorario"
-).value=o.horario||"";
-
-
-document.getElementById(
-"ordemResponsavel"
-).value=o.responsavel||"";
-
-
-document.getElementById(
-"ordemFornecedor"
-).value=o.fornecedor||"";
-
-
-document.getElementById(
-"ordemChecklist"
-).value=o.checklist||"";
-
-
-document.getElementById(
-"ordemProcedimento"
-).value=o.procedimento||"";
-
-
-document.getElementById(
-"ordemObservacoes"
-).value=o.observacoes||"";
-
-
-fotosTemporarias=
-(o.fotos||[]).map(x=>({...x}));
-
+document.getElementById("modalTitulo").textContent = "Editar Ordem de Serviço";
+document.getElementById("ordemId").value = o.id;
+document.getElementById("ordemItem").value = o.itemId || "";
+document.getElementById("ordemTitulo").value = o.titulo || "";
+document.getElementById("ordemArea").value = o.area || "";
+document.getElementById("ordemLocal").value = o.local || "";
+document.getElementById("ordemEquipamento").value = o.equipamentoId || "";
+document.getElementById("ordemTipo").value = o.tipo || "";
+document.getElementById("ordemPrioridade").value = o.prioridade || "Média";
+document.getElementById("ordemStatus").value = o.status || "Aberta";
+document.getElementById("ordemData").value = o.data || hoje();
+document.getElementById("ordemHorario").value = o.horario || "";
+document.getElementById("ordemResponsavel").value = o.responsavel || "";
+document.getElementById("ordemFornecedor").value = o.fornecedor || "";
+document.getElementById("ordemChecklist").value = o.checklist || "";
+document.getElementById("ordemProcedimento").value = o.procedimento || "";
+document.getElementById("ordemObservacoes").value = o.observacoes || "";
+fotosTemporarias = (o.fotos || []).map(x=>({...x}));
 renderFotosOS();
-
-
-document.getElementById(
-"btnExcluirOS"
-).style.display="block";
-
-
-document.getElementById(
-"modalOrdem"
-).classList.add("show");
-
+document.getElementById("btnExcluirOS").style.display = "block";
+document.getElementById("modalOrdem").classList.add("show");
 }
 
-
-function fecharModalOrdem(){
-
-document.getElementById(
-"modalOrdem"
-).classList.remove("show");
-
-}
-
-
-/* =========================================================
-   FOTOS OS
-========================================================= */
+function fecharModalOrdem(){ document.getElementById("modalOrdem").classList.remove("show"); }
 
 function adicionarFotosOS(event){
-
-let arquivos=
-Array.from(
-event.target.files||[]
-);
-
-
+let arquivos = Array.from(event.target.files || []);
 arquivos.forEach(file=>{
-
-if(!file.type.startsWith("image/"))
-return;
-
-
-let reader=new FileReader();
-
-
-reader.onload=function(e){
-
-fotosTemporarias.push({
-
-id:gerarID("IMG"),
-
-nome:file.name,
-
-data:e.target.result
-
-});
-
-
+if(!file.type.startsWith("image/")) return;
+let reader = new FileReader();
+reader.onload = function(e){
+fotosTemporarias.push({ id: gerarID("IMG"), nome: file.name, data: e.target.result });
 renderFotosOS();
-
 };
-
-
 reader.readAsDataURL(file);
-
 });
-
-
-event.target.value="";
-
+event.target.value = "";
 }
-
 
 function renderFotosOS(){
-
-let div=
-document.getElementById(
-"fotosPreview"
-);
-
-
-if(!fotosTemporarias.length){
-
-div.innerHTML=
-"<div class='small'>Nenhuma foto adicionada.</div>";
-
-return;
-
-}
-
-
-div.innerHTML=
-fotosTemporarias.map((f,i)=>`
-
+let div = document.getElementById("fotosPreview");
+if(!fotosTemporarias.length){ div.innerHTML = "<div class='small'>Nenhuma foto adicionada.</div>"; return; }
+div.innerHTML = fotosTemporarias.map((f,i)=>`
 <div class="photo-card">
-
-<img
-src="${f.data}"
-alt="${escapar(f.nome)}">
-
-<button
-class="photo-remove"
-onclick="removerFotoOS(${i})">
-×
-</button>
-
+<img src="${f.data}" alt="${escapar(f.nome)}">
+<button class="photo-remove" onclick="removerFotoOS(${i})">×</button>
 </div>
-
 `).join("");
-
 }
 
-
-function removerFotoOS(i){
-
-fotosTemporarias.splice(i,1);
-
-renderFotosOS();
-
-}
-
-
-/* =========================================================
-   SALVAR OS
-========================================================= */
+function removerFotoOS(i){ fotosTemporarias.splice(i,1); renderFotosOS(); }
 
 function salvarOS(){
-
-let titulo=
-document.getElementById(
-"ordemTitulo"
-).value.trim();
-
-
-if(!titulo){
-
-alert(
-"Informe o título da tarefa."
-);
-
-return;
-
-}
-
-
-let id=
-document.getElementById(
-"ordemId"
-).value;
-
-
-let dados={
-
-itemId:
-document.getElementById(
-"ordemItem"
-).value,
-
+let titulo = document.getElementById("ordemTitulo").value.trim();
+if(!titulo){ alert("Informe o título da tarefa."); return; }
+let id = document.getElementById("ordemId").value;
+let dados = {
+itemId: document.getElementById("ordemItem").value,
 titulo,
-
-area:
-document.getElementById(
-"ordemArea"
-).value,
-
-local:
-document.getElementById(
-"ordemLocal"
-).value,
-
-equipamentoId:
-document.getElementById(
-"ordemEquipamento"
-).value,
-
-tipo:
-document.getElementById(
-"ordemTipo"
-).value,
-
-prioridade:
-document.getElementById(
-"ordemPrioridade"
-).value,
-
-status:
-document.getElementById(
-"ordemStatus"
-).value,
-
-data:
-document.getElementById(
-"ordemData"
-).value,
-
-horario:
-document.getElementById(
-"ordemHorario"
-).value,
-
-responsavel:
-document.getElementById(
-"ordemResponsavel"
-).value,
-
-fornecedor:
-document.getElementById(
-"ordemFornecedor"
-).value,
-
-checklist:
-document.getElementById(
-"ordemChecklist"
-).value.trim(),
-
-procedimento:
-document.getElementById(
-"ordemProcedimento"
-).value.trim(),
-
-observacoes:
-document.getElementById(
-"ordemObservacoes"
-).value.trim(),
-
-fotos:fotosTemporarias
-
+area: document.getElementById("ordemArea").value,
+local: document.getElementById("ordemLocal").value,
+equipamentoId: document.getElementById("ordemEquipamento").value,
+tipo: document.getElementById("ordemTipo").value,
+prioridade: document.getElementById("ordemPrioridade").value,
+status: document.getElementById("ordemStatus").value,
+data: document.getElementById("ordemData").value,
+horario: document.getElementById("ordemHorario").value,
+responsavel: document.getElementById("ordemResponsavel").value,
+fornecedor: document.getElementById("ordemFornecedor").value,
+checklist: document.getElementById("ordemChecklist").value.trim(),
+procedimento: document.getElementById("ordemProcedimento").value.trim(),
+observacoes: document.getElementById("ordemObservacoes").value.trim(),
+fotos: fotosTemporarias
 };
-
-
 if(id){
-
-let o=
-ordens.find(
-x=>x.id===id
-);
-
-if(o)
-Object.assign(o,dados);
-
-}else{
-
-ordens.push({
-
-id:gerarID("OS"),
-
-...dados,
-
-criadoEm:new Date().toISOString()
-
-});
-
+let o = ordens.find(x=>x.id===id);
+if(o) Object.assign(o, dados);
+} else {
+ordens.push({ id: gerarID("OS"), ...dados, criadoEm: new Date().toISOString() });
 }
-
-
 salvarTudo();
-
 fecharModalOrdem();
-
 renderTudo();
-
-alert(
-"Ordem de serviço salva com sucesso."
-);
-
+alert("Ordem de serviço salva com sucesso.");
 }
-
-
-/* =========================================================
-   EXCLUIR OS
-========================================================= */
 
 function excluirOS(){
-
-let id=
-document.getElementById(
-"ordemId"
-).value;
-
-
-if(!confirm(
-"Excluir esta Ordem de Serviço?"
-))
-return;
-
-
-ordens=
-ordens.filter(
-o=>o.id!==id
-);
-
-
+let id = document.getElementById("ordemId").value;
+if(!confirm("Excluir esta Ordem de Serviço?")) return;
+ordens = ordens.filter(o=>o.id!==id);
 salvarTudo();
-
 fecharModalOrdem();
-
 renderTudo();
-
 }
 
-
-/* =========================================================
-   CALENDÁRIO
-========================================================= */
-
+// CALENDÁRIO
 function mudarMes(valor){
-
-dataCalendario.setMonth(
-dataCalendario.getMonth()+valor
-);
-
+dataCalendario.setMonth(dataCalendario.getMonth() + valor);
 renderCalendario();
-
 }
-
 
 function renderCalendario(){
+let ano = dataCalendario.getFullYear();
+let mes = dataCalendario.getMonth();
+let primeiro = new Date(ano, mes, 1);
+let ultimo = new Date(ano, mes+1, 0);
+let inicio = (primeiro.getDay() + 6) % 7;
 
-let ano=
-dataCalendario.getFullYear();
+document.getElementById("tituloMes").textContent = primeiro.toLocaleDateString("pt-BR", { month:"long", year:"numeric" });
+let html = "";
+["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"].forEach(d=>{ html += `<div class="weekday">${d}</div>`; });
+for(let i=0; i<inicio; i++) html += "<div></div>";
 
-let mes=
-dataCalendario.getMonth();
-
-
-let primeiro=
-new Date(
-ano,
-mes,
-1
-);
-
-
-let ultimo=
-new Date(
-ano,
-mes+1,
-0
-);
-
-
-let inicio=
-(primeiro.getDay()+6)%7;
-
-
-document.getElementById(
-"tituloMes"
-).textContent=
-primeiro.toLocaleDateString(
-"pt-BR",
-{
-month:"long",
-year:"numeric"
-}
-);
-
-
-let html="";
-
-
-[
-"Seg",
-"Ter",
-"Qua",
-"Qui",
-"Sex",
-"Sáb",
-"Dom"
-]
-.forEach(d=>{
-html+=
-`<div class="weekday">${d}</div>`;
-});
-
-
-for(let i=0;i<inicio;i++)
-html+="<div></div>";
-
-
-for(let d=1;
-d<=ultimo.getDate();
-d++){
-
-let data=
-ano+"-"+
-String(mes+1).padStart(2,"0")+"-"+
-String(d).padStart(2,"0");
-
-
-let tarefas=
-ordens.filter(
-o=>o.data===data
-);
-
-
-html+=`
-
-<div
-class="day ${
-data===hoje()
-?"today":
-""
-}"
-onclick="abrirDia('${data}')">
-
-<div class="day-number">
-${d}
+for(let d=1; d<=ultimo.getDate(); d++){
+let data = ano+"-"+String(mes+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+let tarefas = ordens.filter(o=>o.data===data);
+html += `
+<div class="day ${data===hoje()?"today":""}" onclick="abrirDia('${data}')">
+<div class="day-number">${d}</div>
+${tarefas.slice(0,5).map(o=>`<div class="calendar-task">${escapar(o.titulo)}</div>`).join("")}
+${tarefas.length>5?`<div class="calendar-task">+${tarefas.length-5}</div>`:""}
 </div>
-
-${tarefas
-.slice(0,5)
-.map(o=>
-`<div class="calendar-task">
-${escapar(o.titulo)}
-</div>`
-)
-.join("")}
-
-${tarefas.length>5?
-`<div class="calendar-task">
-+${tarefas.length-5}
-</div>`:
-""}
-
-</div>
-
 `;
-
+}
+document.getElementById("calendarioGrid").innerHTML = html;
 }
 
+function abrirDia(data){ abrirOSComItem("", data); }
 
-document.getElementById(
-"calendarioGrid"
-).innerHTML=html;
-
-}
-
-
-function abrirDia(data){
-
-abrirOSComItem("",data);
-
-}
-
-
-/* =========================================================
-   RELATÓRIOS
-========================================================= */
-
+// RELATÓRIOS
 function renderRelatorios(){
+let inicio = document.getElementById("relInicio")?.value || "";
+let fim = document.getElementById("relFim")?.value || "";
+let area = document.getElementById("relArea")?.value || "";
+let tipo = document.getElementById("relTipo")?.value || "";
 
-let inicio=
-document.getElementById(
-"relInicio"
-)?.value||"";
-
-
-let fim=
-document.getElementById(
-"relFim"
-)?.value||"";
-
-
-let area=
-document.getElementById(
-"relArea"
-)?.value||"";
-
-
-let tipo=
-document.getElementById(
-"relTipo"
-)?.value||"";
-
-
-let lista=
-ordens.filter(o=>{
-
-return(
-!inicio||o.data>=inicio
-)&&(
-!fim||o.data<=fim
-)&&(
-!area||o.area===area
-)&&(
-!tipo||o.tipo===tipo
-);
-
+let lista = ordens.filter(o=>{
+return (!inicio || o.data>=inicio) && (!fim || o.data<=fim) && (!area || o.area===area) && (!tipo || o.tipo===tipo);
 });
 
+let total = lista.length;
+let abertas = lista.filter(o=>o.status==="Aberta").length;
+let andamento = lista.filter(o=>o.status==="Em andamento").length;
+let concluidas = lista.filter(o=>o.status==="Concluída").length;
+let atrasadas = lista.filter(o=>o.status!=="Concluída" && o.data<hoje()).length;
+let perc = total ? Math.round(concluidas/total*100) : 0;
 
-let total=lista.length;
+let porArea = {};
+lista.forEach(o=>{ porArea[o.area] = (porArea[o.area]||0)+1; });
+let porTipo = {};
+lista.forEach(o=>{ porTipo[o.tipo] = (porTipo[o.tipo]||0)+1; });
+let porPrioridade = {};
+lista.forEach(o=>{ porPrioridade[o.prioridade] = (porPrioridade[o.prioridade]||0)+1; });
 
-let abertas=
-lista.filter(
-o=>o.status==="Aberta"
-).length;
-
-let andamento=
-lista.filter(
-o=>o.status==="Em andamento"
-).length;
-
-let concluidas=
-lista.filter(
-o=>o.status==="Concluída"
-).length;
-
-let atrasadas=
-lista.filter(
-o=>
-o.status!=="Concluída" &&
-o.data<hoje()
-).length;
-
-
-let perc=
-total?
-Math.round(
-concluidas/total*100
-):
-0;
-
-
-let porArea={};
-
-lista.forEach(o=>{
-porArea[o.area]=
-(porArea[o.area]||0)+1;
-});
-
-
-let porTipo={};
-
-lista.forEach(o=>{
-porTipo[o.tipo]=
-(porTipo[o.tipo]||0)+1;
-});
-
-
-let porPrioridade={};
-
-lista.forEach(o=>{
-porPrioridade[o.prioridade]=
-(porPrioridade[o.prioridade]||0)+1;
-});
-
-
-document.getElementById(
-"relatorioConteudo"
-).innerHTML=`
-
+document.getElementById("relatorioConteudo").innerHTML = `
 <div class="report-grid">
-
-<div class="report-card">
-<div class="kpi-label">
-Total de OS
+<div class="report-card"><div class="kpi-label">Total de OS</div><div class="report-number">${total}</div></div>
+<div class="report-card"><div class="kpi-label">Abertas</div><div class="report-number">${abertas}</div></div>
+<div class="report-card"><div class="kpi-label">Em andamento</div><div class="report-number">${andamento}</div></div>
+<div class="report-card"><div class="kpi-label">Concluídas</div><div class="report-number">${concluidas}</div></div>
 </div>
-<div class="report-number">
-${total}
+<div class="report-grid" style="margin-top:15px">
+<div class="report-card"><div class="kpi-label">Atrasadas</div><div class="report-number">${atrasadas}</div></div>
+<div class="report-card"><div class="kpi-label">Índice de conclusão</div><div class="report-number">${perc}%</div></div>
+<div class="report-card"><div class="kpi-label">Meta</div><div class="report-number">${config.meta}%</div></div>
+<div class="report-card"><div class="kpi-label">Resultado</div><div class="report-number">${perc>=config.meta?"✓":"⚠️"}</div></div>
 </div>
+<div class="dashboard-grid" style="margin-top:18px">
+<div class="card"><div class="card-title">OS por área</div>${renderBarras(porArea, total)}</div>
+<div class="card"><div class="card-title">OS por tipo</div>${renderBarras(porTipo, total)}</div>
 </div>
-
-<div class="report-card">
-<div class="kpi-label">
-Abertas
-</div>
-<div class="report-number">
-${abertas}
-</div>
-</div>
-
-<div class="report-card">
-<div class="kpi-label">
-Em andamento
-</div>
-<div class="report-number">
-${andamento}
-</div>
-</div>
-
-<div class="report-card">
-<div class="kpi-label">
-Concluídas
-</div>
-<div class="report-number">
-${concluidas}
-</div>
-</div>
-
-</div>
-
-
-<div class="report-grid"
-style="margin-top:15px">
-
-<div class="report-card">
-<div class="kpi-label">
-Atrasadas
-</div>
-<div class="report-number">
-${atrasadas}
-</div>
-</div>
-
-<div class="report-card">
-<div class="kpi-label">
-Índice de conclusão
-</div>
-<div class="report-number">
-${perc}%
-</div>
-</div>
-
-<div class="report-card">
-<div class="kpi-label">
-Meta
-</div>
-<div class="report-number">
-${config.meta}%
-</div>
-</div>
-
-<div class="report-card">
-<div class="kpi-label">
-Resultado
-</div>
-<div class="report-number">
-${perc>=config.meta?"✓":"⚠️"}
-</div>
-</div>
-
-</div>
-
-
-<div class="dashboard-grid"
-style="margin-top:18px">
-
-<div class="card">
-
-<div class="card-title">
-OS por área
-</div>
-
-${renderBarras(
-porArea,
-total
-)}
-
-</div>
-
-
-<div class="card">
-
-<div class="card-title">
-OS por tipo
-</div>
-
-${renderBarras(
-porTipo,
-total
-)}
-
-</div>
-
-</div>
-
-
-<div class="dashboard-grid"
-style="margin-top:18px">
-
-<div class="card">
-
-<div class="card-title">
-Prioridades
-</div>
-
-${renderBarras(
-porPrioridade,
-total
-)}
-
-</div>
-
-
-<div class="card">
-
-<div class="card-title">
-Resumo
-</div>
-
-<table>
-
-<tr>
-<td>Abertas</td>
-<td><b>${abertas}</b></td>
-</tr>
-
-<tr>
-<td>Em andamento</td>
-<td><b>${andamento}</b></td>
-</tr>
-
-<tr>
-<td>Concluídas</td>
-<td><b>${concluidas}</b></td>
-</tr>
-
-<tr>
-<td>Atrasadas</td>
-<td><b>${atrasadas}</b></td>
-</tr>
-
-</table>
-
-</div>
-
-</div>
-
 `;
-
 }
 
-
-function renderBarras(
-obj,
-total
-){
-
-let chaves=
-Object.keys(obj);
-
-
-if(!chaves.length)
-return"<div class='empty'>Sem dados.</div>";
-
-
+function renderBarras(obj, total){
+let chaves = Object.keys(obj);
+if(!chaves.length) return "<div class='empty'>Sem dados.</div>";
 return chaves.map(k=>{
-
-let percentual=
-total?
-Math.round(
-obj[k]/total*100
-):
-0;
-
-
-return`
-
+let percentual = total ? Math.round(obj[k]/total*100) : 0;
+return `
 <div class="bar-row">
-
-<div class="bar-label">
-
-<span>
-${escapar(k)}
-</span>
-
-<b>
-${obj[k]}
-(${percentual}%)
-</b>
-
+<div class="bar-label"><span>${escapar(k)}</span><b>${obj[k]} (${percentual}%)</b></div>
+<div class="bar-track"><div class="bar-fill" style="width:${percentual}%"></div></div>
 </div>
-
-<div class="bar-track">
-
-<div
-class="bar-fill"
-style="width:${percentual}%">
-</div>
-
-</div>
-
-</div>
-
 `;
-
 }).join("");
-
 }
 
-
-/* =========================================================
-   HISTÓRICO
-========================================================= */
-
+// HISTÓRICO
 function renderHistorico(){
-
-let lista=
-ordens
-.filter(
-o=>o.status==="Concluída"
-)
-.sort(
-(a,b)=>
-b.data.localeCompare(a.data)
-);
-
-
-let div=
-document.getElementById(
-"historicoLista"
-);
-
-
-if(!lista.length){
-
-div.innerHTML=
-"<div class='empty'>Nenhuma atividade concluída.</div>";
-
-return;
-
-}
-
-
-div.innerHTML=
-lista.map(o=>`
-
+let lista = ordens.filter(o=>o.status==="Concluída").sort((a,b)=>b.data.localeCompare(a.data));
+let div = document.getElementById("historicoLista");
+if(!lista.length){ div.innerHTML = "<div class='empty'>Nenhuma atividade concluída.</div>"; return; }
+div.innerHTML = lista.map(o=>`
 <div class="task">
-
 <span class="dot green"></span>
-
 <div class="task-content">
-
-<div class="task-title">
-✓ ${escapar(o.titulo)}
+<div class="task-title">✓ ${escapar(o.titulo)}</div>
+<div class="meta">${formatarData(o.data)} • ${escapar(o.area)} • ${escapar(o.local||"-")} • ${escapar(o.responsavel||"-")} • 📷 ${o.fotos?.length||0}</div>
 </div>
-
-<div class="meta">
-
-${formatarData(o.data)}
-•
-${escapar(o.area)}
-•
-${escapar(o.local||"-")}
-•
-${escapar(o.responsavel||"-")}
-•
-📷 ${o.fotos?.length||0}
-
+<button class="btn btn-light" onclick="editarOS('${o.id}')">Abrir</button>
 </div>
-
-</div>
-
-<button
-class="btn btn-light"
-onclick="editarOS('${o.id}')">
-Abrir
-</button>
-
-</div>
-
 `).join("");
-
 }
 
-
-/* =========================================================
-   ÁREA NOVA
-========================================================= */
-
+// NOVA ÁREA
 function novaArea(){
-
-document.getElementById(
-"nomeArea"
-).value="";
-
-document.getElementById(
-"itensArea"
-).value="";
-
-
-document.getElementById(
-"modalArea"
-).classList.add("show");
-
+document.getElementById("nomeArea").value = "";
+document.getElementById("itensArea").value = "";
+document.getElementById("modalArea").classList.add("show");
 }
-
-
-function fecharModalArea(){
-
-document.getElementById(
-"modalArea"
-).classList.remove("show");
-
-}
-
-
+function fecharModalArea(){ document.getElementById("modalArea").classList.remove("show"); }
 function salvarNovaArea(){
-
-let nome=
-document.getElementById(
-"nomeArea"
-).value.trim();
-
-
-if(!nome){
-
-alert(
-"Informe o nome da área."
-);
-
-return;
-
-}
-
-
-if(
-AREAS.some(
-a=>
-a.nome.toLowerCase()===
-nome.toLowerCase()
-)
-){
-
-alert(
-"Esta área já existe."
-);
-
-return;
-
-}
-
-
-let itens=
-document.getElementById(
-"itensArea"
-).value
-.split(";")
-.map(x=>x.trim())
-.filter(Boolean);
-
-
-AREAS.push({
-
-nome,
-
-itens:
-itens.length?
-itens:
-["Diversos"]
-
-});
-
-
+let nome = document.getElementById("nomeArea").value.trim();
+if(!nome){ alert("Informe o nome da área."); return; }
+if(AREAS.some(a=>a.nome.toLowerCase()===nome.toLowerCase())){ alert("Esta área já existe."); return; }
+let itens = document.getElementById("itensArea").value.split(";").map(x=>x.trim()).filter(Boolean);
+AREAS.push({ nome, itens: itens.length ? itens : ["Diversos"] });
 salvarTudo();
-
 fecharModalArea();
-
 renderTudo();
-
 }
 
-
-/* =========================================================
-   CONFIG
-========================================================= */
-
+// CONFIG
 function carregarConfig(){
-
-document.getElementById(
-"responsavelGestao"
-).value=
-config.responsavel||"";
-
-document.getElementById(
-"meta"
-).value=
-config.meta||80;
-
+document.getElementById("responsavelGestao").value = config.responsavel || "";
+document.getElementById("meta").value = config.meta || 80;
 }
-
-
 function salvarConfiguracao(){
-
-config.responsavel=
-document.getElementById(
-"responsavelGestao"
-).value;
-
-
-config.meta=
-Number(
-document.getElementById("meta").value
-)||80;
-
-
+config.responsavel = document.getElementById("responsavelGestao").value;
+config.meta = Number(document.getElementById("meta").value) || 80;
 salvarConfig();
-
 renderDashboard();
-
 }
-
-
-/* =========================================================
-   RESTAURAR
-========================================================= */
-
 function restaurarDados(){
-
-if(!confirm(
-"Isso apagará os dados atuais deste navegador e restaurará a demonstração. Continuar?"
-))
-return;
-
-
-Object.values(STORAGE)
-.forEach(k=>localStorage.removeItem(k));
-
-
+if(!confirm("Isso apagará os dados atuais deste navegador e restaurará a demonstração. Continuar?")) return;
+Object.values(STORAGE).forEach(k=>localStorage.removeItem(k));
 location.reload();
-
 }
-
-
-/* =========================================================
-   RENDER GERAL
-========================================================= */
 
 function renderTudo(){
-
-document.getElementById(
-"dataAtual"
-).textContent=
-new Date().toLocaleDateString(
-"pt-BR",
-{
-weekday:"long",
-day:"2-digit",
-month:"long",
-year:"numeric"
-}
-);
-
-
+document.getElementById("dataAtual").textContent = new Date().toLocaleDateString("pt-BR", { weekday:"long", day:"2-digit", month:"long", year:"numeric" });
 carregarFiltros();
-
 renderDashboard();
-
 renderOrdens();
-
 renderProgramacao();
-
+renderAtividadesCatalogo();
 renderItens();
-
 renderEquipamentos();
-
 renderAreas();
-
 renderCadastros();
-
 renderCalendario();
-
 renderRelatorios();
-
 renderHistorico();
-
 carregarConfig();
-
 }
 
-
-/* =========================================================
-   FECHAMENTO DOS MODAIS
-========================================================= */
-
-document.addEventListener(
-"keydown",
-e=>{
-
+document.addEventListener("keydown", e=>{
 if(e.key==="Escape"){
-
 fecharModalOrdem();
-
 fecharModalItem();
-
 fecharModalEquipamento();
-
 fecharModalProgramacao();
-
 fecharModalArea();
-
+fecharModalAtividadeCatalogo();
 }
-
 });
 
-
-document.querySelectorAll(".modal")
-.forEach(modal=>{
-
-modal.addEventListener(
-"click",
-e=>{
-
-if(e.target===modal)
-modal.classList.remove("show");
-
+document.querySelectorAll(".modal").forEach(modal=>{
+modal.addEventListener("click", e=>{ if(e.target===modal) modal.classList.remove("show"); });
 });
-
-});
-
-
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
 
 criarDemonstracao();
-
 renderTudo();
-
 </script>
-
 </body>
 </html>
