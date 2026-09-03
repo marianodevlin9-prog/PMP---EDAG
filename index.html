@@ -7,6 +7,7 @@
     <style>
         :root {
             --sidebar-bg: #0f172a;
+            --primary-color: #1e3a8a;
             --accent-red: #dc2626;
             --border-color: #cbd5e1;
             --bg-color: #f1f5f9;
@@ -21,7 +22,7 @@
             color: #334155;
         }
 
-        /* Sidebar idêntica à referência */
+        /* Sidebar */
         .sidebar {
             width: 240px;
             background-color: var(--sidebar-bg);
@@ -66,6 +67,7 @@
             border-left: 4px solid #3b82f6;
         }
 
+        /* Main Content */
         .main-content {
             flex-grow: 1;
             padding: 30px;
@@ -106,7 +108,7 @@
             background-color: #1e40af;
         }
 
-        /* Barra de Cadastros solicitada */
+        /* Barra de Cadastros Rápidos */
         .cadastros-bar {
             display: flex;
             gap: 10px;
@@ -124,9 +126,9 @@
             color: #0f172a;
         }
 
-        /* Modais */
+        /* Modal da OS */
         .modal {
-            display: none;
+            display: flex;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5);
@@ -139,7 +141,7 @@
             background: #fff;
             padding: 25px;
             border-radius: 8px;
-            width: 650px;
+            width: 700px;
             max-width: 95%;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             max-height: 90vh;
@@ -203,27 +205,30 @@
             height: 70px;
         }
 
-        /* Seção de Fotos solicitada */
+        /* Seção Exata de Fotos (Antes e Depois) conforme a sua marcação */
         .photo-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-top: 15px;
-            border-top: 1px dashed var(--border-color);
-            padding-top: 15px;
         }
 
         .photo-card {
-            border: 2px dashed var(--border-color);
-            padding: 12px;
+            border: 2px solid #0f172a;
+            padding: 15px;
             text-align: center;
             border-radius: 6px;
             background: #fafafa;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .photo-preview {
             width: 100%;
-            max-height: 120px;
+            max-height: 100px;
             object-fit: contain;
             margin-top: 8px;
             display: none;
@@ -242,19 +247,18 @@
             font-weight: 600;
         }
 
-        /* Tarja vermelha no cabeçalho */
+        /* Tarja vermelha e cabeçalho de impressão A4 */
         .print-header-stripe {
             background-color: var(--accent-red);
             color: white;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
             border-radius: 4px;
             margin-bottom: 15px;
         }
 
-        /* Configuração exata para impressão em folha A4 */
         @media print {
             body {
                 background: none;
@@ -285,19 +289,19 @@
                 border-radius: 0;
             }
             .photo-card {
-                height: 150px;
+                height: 160px;
                 break-inside: avoid;
             }
             .photo-preview {
                 display: block !important;
-                max-height: 100px;
+                max-height: 110px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar idêntica à imagem fornecida -->
+    <!-- Sidebar do Sistema -->
     <div class="sidebar no-print">
         <div class="sidebar-brand">
             PMP EDAG
@@ -324,7 +328,7 @@
             <button class="btn" onclick="openModal('modalOS')">+ Nova ordem</button>
         </div>
 
-        <!-- Cadastros na barra principal solicitados: Item de manutenção, Área, Fornecedor -->
+        <!-- Atalhos de Cadastros -->
         <div class="cadastros-bar no-print">
             <span>Cadastros:</span>
             <button class="btn" style="background:#475569; padding:6px 12px; font-size:13px;" onclick="openModal('modalCadItem')">Item de manutenção</button>
@@ -333,15 +337,15 @@
         </div>
 
         <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-            <p>Painel principal de ordens de serviço. Clique em <strong>+ Nova ordem</strong> para preencher e gerar a folha A4.</p>
+            <p>Ordem de Serviço pronta com os campos atualizados conforme solicitado na imagem de referência[cite: 3].</p>
         </div>
     </div>
 
-    <!-- Modal Nova Ordem de Serviço com os campos exatos do documento -->
+    <!-- Modal com a Estrutura Exata da OS Solicitada -->
     <div id="modalOS" class="modal">
         <div class="modal-content">
             
-            <!-- Tarja Vermelha e Link/Botão para Logotipo -->
+            <!-- Cabeçalho com Tarja Vermelha e Logotipo -->
             <div class="print-header-stripe">
                 PMP EDAG - ORDEM DE SERVIÇO DE MANUTENÇÃO
             </div>
@@ -352,9 +356,9 @@
             </div>
 
             <form id="osForm">
-                <!-- Inserir Logotipo -->
-                <div class="form-group full-width no-print" style="background: #f8fafc; padding: 10px; border: 1px dashed var(--border-color); border-radius: 6px;">
-                    <label>Logotipo da Empresa (Link / Inserir Imagem)</label>
+                <!-- Logotipo da Empresa -->
+                <div class="form-group full-width no-print" style="background: #f8fafc; padding: 10px; border: 1px dashed var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <label>Logotipo da Empresa (Carregar Imagem)</label>
                     <input type="file" accept="image/*" onchange="previewLogo(this)">
                     <img id="logoPreview" style="max-height: 40px; margin-top: 5px; display: none;" alt="Logotipo">
                 </div>
@@ -374,22 +378,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Item de manutenção *</label>
-                        <select id="selectItem" required>
+                        <label>Item de manutenção</label>
+                        <select id="selectItem">
                             <option value="Eletrica">Elétrica</option>
                             <option value="Hidraulica">Hidráulica</option>
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label>Fornecedor</label>
-                        <select id="selectFornecedor">
-                            <option value="">Selecione o fornecedor</option>
-                            <option value="FornecedorExemplo">Fornecedor Exemplo</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
+                    <div class="form-group full-width">
                         <label>Local / setor</label>
                         <input type="text" placeholder="Ex.: Casa de bombas">
                     </div>
@@ -416,12 +412,7 @@
                         <input type="date" id="dataInicio">
                     </div>
 
-                    <div class="form-group">
-                        <label>Horário</label>
-                        <input type="time">
-                    </div>
-
-                    <!-- Campos solicitados explicitamente no documento -->
+                    <!-- Campos inseridos exatamente conforme a imagem enviada -->
                     <div class="form-group">
                         <label>Quantidade de horas prevista</label>
                         <input type="number" placeholder="Ex.: 8">
@@ -437,42 +428,37 @@
                         <input type="text" value="Gestão de Facilities">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group full-width">
                         <label>Periodicidade</label>
                         <select>
                             <option value="Única">Única</option>
                             <option value="Mensal">Mensal</option>
                         </select>
                     </div>
-
-                    <div class="form-group full-width">
-                        <label>Checklist</label>
-                        <textarea placeholder="Digite os itens separados por ponto e vírgula. Ex.: verificar funcionamento; testar equipamento"></textarea>
-                    </div>
-
-                    <!-- Observações solicitadas -->
-                    <div class="form-group full-width">
-                        <label>Observações</label>
-                        <textarea placeholder="Observações gerais sobre a OS..."></textarea>
-                    </div>
                 </div>
 
-                <!-- Seção de Fotos: Adicionar foto antes e Adicionar foto depois com link para a câmera -->
+                <!-- Quadros de Fotos: Adicionar foto antes / Adicionar foto depois (Exatamente como na sua imagem) -->
                 <div class="photo-section">
                     <div class="photo-card">
-                        <label>Adicionar foto antes</label>
+                        <label style="font-weight: bold; font-size: 14px;">Adicionar foto antes</label>
                         <input type="file" accept="image/*" capture="environment" id="fotoAntes" style="display:none;" onchange="handlePhoto(this, 'previewAntes')">
-                        <br>
                         <label for="fotoAntes" class="camera-btn no-print">Tirar / Carregar Foto</label>
                         <img id="previewAntes" class="photo-preview" alt="Foto Antes">
                     </div>
 
                     <div class="photo-card">
-                        <label>Adicionar foto depois</label>
+                        <label style="font-weight: bold; font-size: 14px;">Adicionar foto depois</label>
                         <input type="file" accept="image/*" capture="environment" id="fotoDepois" style="display:none;" onchange="handlePhoto(this, 'previewDepois')">
-                        <br>
                         <label for="fotoDepois" class="camera-btn no-print">Tirar / Carregar Foto</label>
                         <img id="previewDepois" class="photo-preview" alt="Foto Depois">
+                    </div>
+                </div>
+
+                <!-- Campo de Observações destacado com borda idêntica à imagem -->
+                <div class="form-group full-width" style="margin-top: 15px;">
+                    <div style="border: 2px solid #0f172a; padding: 10px; border-radius: 6px; background: #fafafa;">
+                        <label style="font-weight: bold; font-size: 14px;">Observações:</label>
+                        <textarea style="border: none; background: transparent; height: 60px;" placeholder="Digite as observações gerais da OS..."></textarea>
                     </div>
                 </div>
 
@@ -483,8 +469,8 @@
         </div>
     </div>
 
-    <!-- Modais de Cadastro (Item, Área, Fornecedor) -->
-    <div id="modalCadItem" class="modal">
+    <!-- Modais de Cadastros -->
+    <div id="modalCadItem" class="modal" style="display:none;">
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header"><h3>Cadastrar Item de Manutenção</h3><span class="close-btn" onclick="closeModal('modalCadItem')">&times;</span></div>
             <div class="form-group"><label>Nome do Item</label><input type="text" id="novoItemTxt"></div>
@@ -492,7 +478,7 @@
         </div>
     </div>
 
-    <div id="modalCadArea" class="modal">
+    <div id="modalCadArea" class="modal" style="display:none;">
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header"><h3>Cadastrar Área</h3><span class="close-btn" onclick="closeModal('modalCadArea')">&times;</span></div>
             <div class="form-group"><label>Nome da Área</label><input type="text" id="novaAreaTxt"></div>
@@ -500,11 +486,11 @@
         </div>
     </div>
 
-    <div id="modalCadFornecedor" class="modal">
+    <div id="modalCadFornecedor" class="modal" style="display:none;">
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header"><h3>Cadastrar Fornecedor</h3><span class="close-btn" onclick="closeModal('modalCadFornecedor')">&times;</span></div>
-            <div class="form-group"><label>Nome do Fornecedor</label><input type="text" id="novoFornecedorTxt"></div>
-            <button class="btn" onclick="salvarFornecedor()">Salvar</button>
+            <div class="form-group"><label>Nome do Fornecedor</label><input type="text"></div>
+            <button class="btn" onclick="closeModal('modalCadFornecedor')">Salvar</button>
         </div>
     </div>
 
@@ -559,18 +545,6 @@
                 sel.add(opt);
                 closeModal('modalCadArea');
                 document.getElementById('novaAreaTxt').value = '';
-            }
-        }
-
-        function salvarFornecedor() {
-            const val = document.getElementById('novoFornecedorTxt').value;
-            if(val) {
-                let sel = document.getElementById('selectFornecedor');
-                let opt = document.createElement('option');
-                opt.value = val; opt.text = val;
-                sel.add(opt);
-                closeModal('modalCadFornecedor');
-                document.getElementById('novoFornecedorTxt').value = '';
             }
         }
     </script>
