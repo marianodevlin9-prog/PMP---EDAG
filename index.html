@@ -7,7 +7,6 @@
     <style>
         :root {
             --sidebar-bg: #0f172a;
-            --primary-color: #1e3a8a;
             --accent-red: #dc2626;
             --border-color: #cbd5e1;
             --bg-color: #f1f5f9;
@@ -22,7 +21,7 @@
             color: #334155;
         }
 
-        /* Sidebar */
+        /* Sidebar idêntica à referência */
         .sidebar {
             width: 240px;
             background-color: var(--sidebar-bg);
@@ -67,7 +66,6 @@
             border-left: 4px solid #3b82f6;
         }
 
-        /* Main Content */
         .main-content {
             flex-grow: 1;
             padding: 30px;
@@ -108,7 +106,7 @@
             background-color: #1e40af;
         }
 
-        /* Seção de Cadastros Rápidos */
+        /* Barra de Cadastros solicitada */
         .cadastros-bar {
             display: flex;
             gap: 10px;
@@ -141,7 +139,7 @@
             background: #fff;
             padding: 25px;
             border-radius: 8px;
-            width: 550px;
+            width: 650px;
             max-width: 95%;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             max-height: 90vh;
@@ -205,7 +203,7 @@
             height: 70px;
         }
 
-        /* Seção de Fotos na OS */
+        /* Seção de Fotos solicitada */
         .photo-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -244,7 +242,19 @@
             font-weight: 600;
         }
 
-        /* Configuração de Impressão A4 Exata */
+        /* Tarja vermelha no cabeçalho */
+        .print-header-stripe {
+            background-color: var(--accent-red);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        /* Configuração exata para impressão em folha A4 */
         @media print {
             body {
                 background: none;
@@ -267,17 +277,6 @@
                 max-width: none;
                 border: none;
             }
-            .print-header-stripe {
-                background-color: var(--accent-red) !important;
-                color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                padding: 10px;
-                text-align: center;
-                font-weight: bold;
-                font-size: 16px;
-                margin-bottom: 15px;
-            }
             input, select, textarea {
                 border: none;
                 border-bottom: 1px solid #000;
@@ -294,15 +293,11 @@
                 max-height: 100px;
             }
         }
-
-        .print-header-stripe {
-            display: none;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar conforme solicitado[cite: 3] -->
+    <!-- Sidebar idêntica à imagem fornecida -->
     <div class="sidebar no-print">
         <div class="sidebar-brand">
             PMP EDAG
@@ -329,7 +324,7 @@
             <button class="btn" onclick="openModal('modalOS')">+ Nova ordem</button>
         </div>
 
-        <!-- Atalhos de Cadastros solicitados[cite: 3] -->
+        <!-- Cadastros na barra principal solicitados: Item de manutenção, Área, Fornecedor -->
         <div class="cadastros-bar no-print">
             <span>Cadastros:</span>
             <button class="btn" style="background:#475569; padding:6px 12px; font-size:13px;" onclick="openModal('modalCadItem')">Item de manutenção</button>
@@ -338,15 +333,16 @@
         </div>
 
         <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-            <p>Lista de ordens de serviço ativas. Clique em <strong>+ Nova ordem</strong> para criar e imprimir o documento A4[cite: 3].</p>
+            <p>Painel principal de ordens de serviço. Clique em <strong>+ Nova ordem</strong> para preencher e gerar a folha A4.</p>
         </div>
     </div>
 
-    <!-- Modal Nova Ordem de Serviço (A4 / Impressão Integrada) -->
+    <!-- Modal Nova Ordem de Serviço com os campos exatos do documento -->
     <div id="modalOS" class="modal">
         <div class="modal-content">
-            <!-- Tarja Vermelha no Cabeçalho para Impressão e Tela[cite: 3] -->
-            <div class="print-header-stripe" style="display:block; background-color: var(--accent-red); color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 4px; margin-bottom: 15px;">
+            
+            <!-- Tarja Vermelha e Link/Botão para Logotipo -->
+            <div class="print-header-stripe">
                 PMP EDAG - ORDEM DE SERVIÇO DE MANUTENÇÃO
             </div>
 
@@ -356,9 +352,9 @@
             </div>
 
             <form id="osForm">
-                <!-- Logotipo Link / Upload[cite: 3] -->
+                <!-- Inserir Logotipo -->
                 <div class="form-group full-width no-print" style="background: #f8fafc; padding: 10px; border: 1px dashed var(--border-color); border-radius: 6px;">
-                    <label>Logotipo da Empresa (Inserir Imagem)</label>
+                    <label>Logotipo da Empresa (Link / Inserir Imagem)</label>
                     <input type="file" accept="image/*" onchange="previewLogo(this)">
                     <img id="logoPreview" style="max-height: 40px; margin-top: 5px; display: none;" alt="Logotipo">
                 </div>
@@ -385,7 +381,15 @@
                         </select>
                     </div>
 
-                    <div class="form-group full-width">
+                    <div class="form-group">
+                        <label>Fornecedor</label>
+                        <select id="selectFornecedor">
+                            <option value="">Selecione o fornecedor</option>
+                            <option value="FornecedorExemplo">Fornecedor Exemplo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label>Local / setor</label>
                         <input type="text" placeholder="Ex.: Casa de bombas">
                     </div>
@@ -409,7 +413,7 @@
 
                     <div class="form-group">
                         <label>Data</label>
-                        <input type="date" id="dataInicio" onchange="calcularDataConclusao()">
+                        <input type="date" id="dataInicio">
                     </div>
 
                     <div class="form-group">
@@ -417,14 +421,15 @@
                         <input type="time">
                     </div>
 
+                    <!-- Campos solicitados explicitamente no documento -->
                     <div class="form-group">
                         <label>Quantidade de horas prevista</label>
-                        <input type="number" id="qtdHoras" placeholder="Ex.: 8">
+                        <input type="number" placeholder="Ex.: 8">
                     </div>
 
                     <div class="form-group">
                         <label>Data de conclusão</label>
-                        <input type="date" id="dataConclusao">
+                        <input type="date">
                     </div>
 
                     <div class="form-group">
@@ -442,17 +447,17 @@
 
                     <div class="form-group full-width">
                         <label>Checklist</label>
-                        <textarea placeholder="Digite os itens separados por ponto e vírgula. Ex.: verificar funcionamento; verificar vazamentos; testar equipamento"></textarea>
+                        <textarea placeholder="Digite os itens separados por ponto e vírgula. Ex.: verificar funcionamento; testar equipamento"></textarea>
                     </div>
 
-                    <!-- Observações[cite: 3] -->
+                    <!-- Observações solicitadas -->
                     <div class="form-group full-width">
                         <label>Observações</label>
                         <textarea placeholder="Observações gerais sobre a OS..."></textarea>
                     </div>
                 </div>
 
-                <!-- Seção de Fotos: Adicionar foto antes e Adicionar foto depois[cite: 3] -->
+                <!-- Seção de Fotos: Adicionar foto antes e Adicionar foto depois com link para a câmera -->
                 <div class="photo-section">
                     <div class="photo-card">
                         <label>Adicionar foto antes</label>
@@ -478,7 +483,7 @@
         </div>
     </div>
 
-    <!-- Modais Auxiliares para Cadastros[cite: 3] -->
+    <!-- Modais de Cadastro (Item, Área, Fornecedor) -->
     <div id="modalCadItem" class="modal">
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header"><h3>Cadastrar Item de Manutenção</h3><span class="close-btn" onclick="closeModal('modalCadItem')">&times;</span></div>
@@ -498,22 +503,13 @@
     <div id="modalCadFornecedor" class="modal">
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header"><h3>Cadastrar Fornecedor</h3><span class="close-btn" onclick="closeModal('modalCadFornecedor')">&times;</span></div>
-            <div class="form-group"><label>Nome do Fornecedor</label><input type="text"></div>
-            <button class="btn" onclick="closeModal('modalCadFornecedor')">Salvar</button>
+            <div class="form-group"><label>Nome do Fornecedor</label><input type="text" id="novoFornecedorTxt"></div>
+            <button class="btn" onclick="salvarFornecedor()">Salvar</button>
         </div>
     </div>
 
     <script>
         document.getElementById('dataInicio').valueAsDate = new Date();
-
-        function calcularDataConclusao() {
-            const inicio = document.getElementById('dataInicio').value;
-            if(inicio) {
-                let d = new Date(inicio);
-                d.setDate(d.getDate() + 1); // Exemplo padrão de conclusão no dia seguinte se necessário
-                document.getElementById('dataConclusao').valueAsDate = d;
-            }
-        }
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
@@ -563,6 +559,18 @@
                 sel.add(opt);
                 closeModal('modalCadArea');
                 document.getElementById('novaAreaTxt').value = '';
+            }
+        }
+
+        function salvarFornecedor() {
+            const val = document.getElementById('novoFornecedorTxt').value;
+            if(val) {
+                let sel = document.getElementById('selectFornecedor');
+                let opt = document.createElement('option');
+                opt.value = val; opt.text = val;
+                sel.add(opt);
+                closeModal('modalCadFornecedor');
+                document.getElementById('novoFornecedorTxt').value = '';
             }
         }
     </script>
